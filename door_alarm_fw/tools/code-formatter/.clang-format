@@ -1,0 +1,208 @@
+##################GENERAL###################
+IndentWidth: 4
+ColumnLimit: 180
+
+############################################
+AlignConsecutiveAssignments: AcrossEmptyLines
+#Demonstration:
+#true:
+#int a            = 1;
+#int somelongname = 2;
+#double c         = 3;
+
+#int d            = 3;
+
+#false:
+#int a            = 1;
+#int somelongname = 2;
+#double c         = 3;
+
+#int d = 3;
+#############################################
+
+
+#############################################
+AlignConsecutiveDeclarations: Consecutive
+AlignConsecutiveMacros:       AcrossEmptyLines
+
+#Same as AlignConsecutiveAssignments settings
+#############################################
+
+#############################################
+AlignEscapedNewlines: Left
+
+#Demonstration:
+##define A \
+#int aaaa; \
+#int b;    \
+#int dddddddddd;
+#############################################
+
+#############################################
+AllowShortBlocksOnASingleLine: Never
+
+#Demonstration:
+#while (true) {
+#}
+#while (true) {
+#continue;
+#}
+#############################################
+
+
+#############################################
+AllowShortCaseLabelsOnASingleLine: false
+
+#Demonstration:
+#true:                                   false:
+#switch (a) {                    vs.     switch (a) {
+#case 1: x = 1; break;                   case 1:
+#case 2: return;                           x = 1;
+#}                                         break;
+#x                                        case 2:
+#x                                          return;
+#x                                        }
+#############################################
+
+#############################################
+AllowShortFunctionsOnASingleLine: None
+
+#Demonstration:
+#"Never merge functions into a single line."
+#############################################
+
+#############################################
+AllowShortIfStatementsOnASingleLine: Never
+
+#Demonstration:
+#if (a)
+  #return;
+
+#if (b)
+  #return;
+#else
+  #return;
+
+#if (c)
+  #return;
+#else {
+  #return;
+#}
+#############################################
+
+#############################################
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterCaseLabel: true
+  AfterEnum: true
+  AfterStruct: true
+  SplitEmptyFunction: true
+  SplitEmptyRecord: true
+  AfterFunction: true
+  AfterControlStatement: true
+  AfterNamespace: true
+  AfterUnion: true
+  AfterExternBlock: true
+  BeforeElse: true
+  BeforeWhile: false
+############################################
+
+############################################
+BreakBeforeTernaryOperators: false
+
+#Demonstration:
+#true:
+#veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongDescription
+    #? firstValue
+    #: SecondValueVeryVeryVeryVeryLong;
+
+#false:
+#veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongDescription ?
+    #firstValue :
+    #SecondValueVeryVeryVeryVeryLong;
+#############################################
+
+############################################
+IncludeBlocks: Preserve
+
+#Demonstration:
+#include "b.h"               into      #include "b.h"
+
+#include <lib/main.h>                  #include "a.h"
+#include "a.h"                         #include <lib/main.h>
+############################################
+
+#############################################
+SpacesInParens: Custom
+SpacesInParensOptions:
+  InConditionalStatements: false
+  InEmptyParentheses: false
+  InCStyleCasts: false
+  Other: false
+
+#Demonstration:
+#true:                                  false:
+#if ( a )  { ... }              vs.     if (a) { ... }
+#while ( i < 5 )  { ... }               while (i < 5) { ... }
+#############################################
+
+#############################################
+SpacesInSquareBrackets: false
+
+#Demonstration:
+#true:                                  false:
+#int a[ 5 ];                    vs.     int a[5];
+#std::unique_ptr<int[]> foo() {} // Won't be affected
+#############################################
+
+#############################################
+PointerAlignment: Left
+#char* ptr instead of char *ptr 
+#############################################
+
+
+#############################################
+SpaceAfterCStyleCast: false
+
+#Demonstration:
+#true:                                  false:
+#(int) i;                       vs.     (int)i;
+#############################################
+
+#############################################
+SpaceBeforeAssignmentOperators: true
+
+#Demonstration:
+#true:                                  false:
+#int a = 5;                     vs.     int a= 5;
+#a += 42;                               a+= 42;
+#############################################
+
+
+#############################################
+SpaceBeforeCaseColon: false
+
+#Demonstration:
+#true:                                   false
+#switch (x) {                    vs.     switch (x) {
+  #case 1 : break;                         case 1: break;
+#}                                       }
+#############################################
+
+#############################################
+SpaceBeforeParens: false
+
+#Demonstration:
+#Never put a space before opening parentheses.
+#############################################
+
+#############################################
+SpaceBeforeSquareBrackets   : false
+
+#Demonstration:
+#Never put a space before opening brackets.
+#############################################
+
+
+
+

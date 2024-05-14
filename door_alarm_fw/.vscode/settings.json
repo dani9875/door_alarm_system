@@ -1,0 +1,17 @@
+{
+    "idf.adapterTargetName": "esp32s3",
+    "files.associations": {
+        "mfrc522.h": "c",
+        "cstdint": "c",
+        "optional": "c",
+        "system_error": "c",
+        "array": "c",
+        "functional": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c",
+        "stdbool.h": "c",
+        "cstddef": "c",
+        "algorithm": "c"
+    }
+}
