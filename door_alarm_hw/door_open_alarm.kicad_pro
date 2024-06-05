@@ -438,9 +438,9 @@
     "last_paths": {
       "gencad": "",
       "idf": "",
-      "netlist": "",
+      "netlist": "./",
       "specctra_dsn": "",
-      "step": "",
+      "step": "door_open_alarm.step",
       "vrml": ""
     },
     "page_layout_descr_file": ""
