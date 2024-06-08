@@ -10,10 +10,14 @@
 #include <stdio.h>
 #include "esp_log.h"
 #include <stdlib.h>
+#include "esp_adc/adc_cali.h"
+#include "esp_adc/adc_cali_scheme.h"
+#include "esp_adc/adc_oneshot.h"
 #include <string.h>
 #include "esp_sleep.h"
 #include "esp_system.h"
 #include "esp_wifi.h"
+#include "driver/rtc_io.h"
 #include "esp_event.h"
 #include "nvs_flash.h"
 #include "esp_http_client.h"
@@ -80,7 +84,58 @@ static EventGroupHandle_t s_wifi_event_group;
 
 static int s_retry_num = 0;
 
+RTC_DATA_ATTR uint8_t prev_level = 0;
+adc_cali_handle_t                       cali_handle;
+adc_oneshot_unit_handle_t               adc_handle;
+const uint8_t reed_en = GPIO_NUM_10;
+const uint8_t door_sensor = GPIO_NUM_5;
+const uint8_t meas_en = GPIO_NUM_6;
+
 static char       TAG[] = "MAIN";
+
+void adc_init(adc_unit_t adcunit, adc_channel_t chan, adc_atten_t atten, adc_bitwidth_t bitwidth)
+{
+    adc_oneshot_unit_init_cfg_t init_config = {.unit_id = adcunit};
+
+    esp_err_t ret                           = adc_oneshot_new_unit(&init_config, &adc_handle);
+    if(ret != ESP_OK)
+    {
+        ESP_LOGE(TAG, "ADC unit initialization failed.");
+
+        return;
+    }
+
+    adc_oneshot_chan_cfg_t config = {
+        .bitwidth = bitwidth,
+        .atten    = atten,
+    };
+
+    ret = adc_oneshot_config_channel((adc_handle), (chan), &config);
+
+    if(ret != ESP_OK)
+    {
+        ESP_LOGE(TAG, "ADC channel configuration failed.");
+
+        return;
+    }
+
+    adc_cali_curve_fitting_config_t cali_config = {
+        .unit_id  = adcunit,
+        .atten    = atten,
+        .bitwidth = bitwidth,
+    };
+
+    ret = adc_cali_create_scheme_curve_fitting(&cali_config, &(cali_handle));
+
+    if(ret != ESP_OK)
+    {
+        ESP_LOGE(TAG, "ADC curve fitting failed.");
+
+        return;
+    }
+
+    return;
+}
 
 void post_event()
 {
@@ -112,7 +167,6 @@ void post_event()
 
     return;
 }
-
 
 static void example_set_static_ip(esp_netif_t *netif)
 {
@@ -234,72 +288,69 @@ void wifi_init_sta(void)
 
 void app_main(void)
 {
+    uint16_t adc_raw;
+    uint16_t vbus_V;
 
-        //Initialize NVS
     esp_err_t ret = nvs_flash_init();
-    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) 
+    {
       ESP_ERROR_CHECK(nvs_flash_erase());
       ret = nvs_flash_init();
     }
+
     ESP_ERROR_CHECK(ret);
 
-    ESP_LOGI(TAG, "ESP_WIFI_MODE_STA");
+    gpio_reset_pin(meas_en);
+    gpio_set_direction(meas_en, GPIO_MODE_OUTPUT);
+    gpio_set_level(meas_en, 1);
+    vTaskDelay(pdMS_TO_TICKS(1000));
 
-    //DISABLE wakeup sources
+    adc_init(ADC_UNIT_1, ADC_CHANNEL_3, ADC_ATTEN_DB_11, ADC_BITWIDTH_DEFAULT);
+    vTaskDelay(pdMS_TO_TICKS(1000));
 
-    uint8_t led = GPIO_NUM_14;
-    uint8_t reed_en = GPIO_NUM_10;
-    uint8_t reed_in = GPIO_NUM_5;
+    adc_oneshot_read(adc_handle, ADC_CHANNEL_3, &adc_raw);
+    adc_cali_raw_to_voltage(cali_handle, adc_raw, &vbus_V);
+    ESP_LOGI("MAIN", "Voltage level: %f", (20.1/5.1)*((float)vbus_V/1000));
+    ESP_LOGI("MAIN", "Voltage level: %d", vbus_V);
 
-    gpio_reset_pin(led);
-    gpio_set_direction(led, GPIO_MODE_OUTPUT);
 
-    gpio_reset_pin(reed_en);
-    gpio_set_direction(reed_en, GPIO_MODE_OUTPUT);
-    gpio_set_level(reed_en, 0);
 
-    gpio_reset_pin(reed_in);
-    gpio_set_direction(reed_in, GPIO_MODE_INPUT);
+    rtc_gpio_hold_dis(reed_en);
+    rtc_gpio_init(reed_en);
+    rtc_gpio_set_direction(reed_en, RTC_GPIO_MODE_OUTPUT_ONLY);
+    rtc_gpio_set_level(reed_en, 0);
 
+
+    vTaskDelay(pdMS_TO_TICKS(1000));
+
+    gpio_reset_pin(door_sensor);
+    gpio_set_direction(door_sensor, GPIO_MODE_INPUT);
     uint8_t level = 0;
-    level = gpio_get_level(reed_in);
-    if(level == 1)
+    level = gpio_get_level(door_sensor);
+    ESP_LOGI("MAIN", "Door sensor level: %d", level);
+
+
+    if(level == 1 && prev_level == 0)
     {
-        esp_sleep_enable_ext0_wakeup(reed_in, 0);
+        esp_sleep_enable_ext0_wakeup(door_sensor, 0);
+        rtc_gpio_set_level(reed_en, 0);
+        rtc_gpio_hold_en(reed_en); 
+        ESP_LOGI("MAIN", "Open door");
+
     }
     else
     {
-        esp_sleep_enable_timer_wakeup(1000000);
+        ESP_LOGI("MAIN", "Closed door");
+
+        esp_sleep_enable_timer_wakeup(5*1000000);
+        rtc_gpio_set_level(reed_en, 1);
+        rtc_gpio_hold_en(reed_en); 
     }
+    prev_level = level;
 
     wifi_init_sta();
-
-    while(1)
-    {
-        // gpio_set_level(led, 0);
-    
-        // level = gpio_get_level(reed_in);
-        // ESP_LOGI("MAIN", "Reed level: %d", level);
-
-
-        // vTaskDelay(pdMS_TO_TICKS(500));
-
-        // gpio_set_level(led, 1);
-
-        // level = gpio_get_level(reed_in);
-        // ESP_LOGI("MAIN", "Reed level: %d", level);
-        //  ESP_LOGI(TAG, "Test messagge");
-
-
-        vTaskDelay(pdMS_TO_TICKS(500));
-
-        // esp_sleep_enable_ext0_wakeup();
-
-        // esp_deep_sleep_start();
-
-
-        
-    }
+    esp_wifi_stop();
+    esp_deep_sleep_start();
 
     return;
 }
