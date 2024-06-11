@@ -1,5 +1,5 @@
+---
 name: Generate Interactive HTML BOM
-
 on:
   push:
     branches:
@@ -7,30 +7,27 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+      - name: Install InteractiveHtmlBom
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y kicad
+          pip install interactive-html-bom
+      - name: Generate Interactive HTML BOM
+        run: >
+          mkdir -p bom
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
+          cd pcb_project
 
-    - name: Install InteractiveHtmlBom
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y kicad
-        pip install interactive-html-bom
-
-     - name: Generate Interactive HTML BOM
-      run: |
-        mkdir -p bom
-        cd pcb_project
-        python3 -m interactive_html_bom -o ../bom/output_file.html your_project.kicad_pcb
-
-    - name: Upload HTML BOM as artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: interactive-html-bom
-        path: bom/output_file.html
+          python3 -m interactive_html_bom -o ../bom/output_file.html your_project.kicad_pcb
+      - name: Upload HTML BOM as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: interactive-html-bom
+          path: bom/output_file.html
