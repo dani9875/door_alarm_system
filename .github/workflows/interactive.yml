@@ -18,16 +18,12 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y kicad
-          pip install interactive-html-bom
+          python3 -m pip install InteractiveHtmlBom
       - name: Generate Interactive HTML BOM
         run: >
-          mkdir -p bom
-
-          cd pcb_project
-
-          python3 -m interactive_html_bom -o ../bom/output_file.html your_project.kicad_pcb
+          generate_interactive_bom --dest-dir . --name-format out.html door_open_alarm.kicad_pcb
       - name: Upload HTML BOM as artifact
         uses: actions/upload-artifact@v2
         with:
           name: interactive-html-bom
-          path: bom/output_file.html
+          path: out.html
