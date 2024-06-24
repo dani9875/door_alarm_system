@@ -300,6 +300,32 @@ void app_main(void)
 
     ESP_ERROR_CHECK(ret);
 
+     switch (esp_sleep_get_wakeup_cause()) 
+     {
+        case ESP_SLEEP_WAKEUP_EXT0:
+        {
+            printf("Wake up from ext0\n");
+            break;
+        }
+        case ESP_SLEEP_WAKEUP_EXT1: {
+            uint64_t wakeup_pin_mask = esp_sleep_get_ext1_wakeup_status();
+            if (wakeup_pin_mask != 0) {
+                int pin = __builtin_ffsll(wakeup_pin_mask) - 1;
+                printf("Wake up from GPIO %d\n", pin);
+            } else {
+                printf("Wake up from GPIO\n");
+            }
+            break;
+        }
+        case ESP_SLEEP_WAKEUP_TIMER: 
+        {
+            printf("Wake up from timer. Time spent in deep sleep\n");
+            break;
+        }
+        default:
+        break;
+     }
+
     gpio_reset_pin(meas_en);
     gpio_set_direction(meas_en, GPIO_MODE_OUTPUT);
     gpio_set_level(meas_en, 1);
@@ -310,6 +336,8 @@ void app_main(void)
 
     adc_oneshot_read(adc_handle, ADC_CHANNEL_3, &adc_raw);
     adc_cali_raw_to_voltage(cali_handle, adc_raw, &vbus_V);
+    gpio_set_level(meas_en, 0);
+
     ESP_LOGI("MAIN", "Voltage level: %f", (20.1/5.1)*((float)vbus_V/1000));
     ESP_LOGI("MAIN", "Voltage level: %d", vbus_V);
 
@@ -330,9 +358,11 @@ void app_main(void)
     ESP_LOGI("MAIN", "Door sensor level: %d", level);
 
 
-    if(level == 1 && prev_level == 0)
+    if(level == 1)
     {
-        esp_sleep_enable_ext0_wakeup(door_sensor, 0);
+        // esp_sleep_disable_wakeup_source(ESP_SLEEP_WAKEUP_ALL);
+
+        esp_sleep_enable_ext0_wakeup(door_sensor, 1);
         rtc_gpio_set_level(reed_en, 0);
         rtc_gpio_hold_en(reed_en); 
         ESP_LOGI("MAIN", "Open door");
@@ -342,7 +372,7 @@ void app_main(void)
     {
         ESP_LOGI("MAIN", "Closed door");
 
-        esp_sleep_enable_timer_wakeup(5*1000000);
+        // esp_sleep_enable_timer_wakeup(5*1000000);
         rtc_gpio_set_level(reed_en, 1);
         rtc_gpio_hold_en(reed_en); 
     }
