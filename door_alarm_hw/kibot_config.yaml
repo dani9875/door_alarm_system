@@ -2,7 +2,12 @@ kibot:
   version: 1
 
 preflight:
-  # erc: true
+  erc:
+    enabled: true
+    dir: fabrication_output/rule_checks
+    format: ["HTML", "RPT"]
+    output: "%f-%i%I%v.%x"
+    dont_stop: false
 
 outputs:
   - name: 'gerbers'
@@ -121,4 +126,4 @@ outputs:
     type: ibom
     dir: fabrication_output/interactive_bom
     options:
-      blacklist: "DNF*"
+      blacklist_empty_val: true
