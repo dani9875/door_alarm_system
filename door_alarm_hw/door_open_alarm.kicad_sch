@@ -1153,27 +1153,45 @@
 				)
 			)
 		)
-		(symbol "pepy_sym_lib:[ESD_PROT]STMicroelectronics USBLC6-2P6"
+		(symbol "pepy_sym_lib:[ESD_PROT]Nexperia IP4283CZ10-TBR,115"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
 			(property "Reference" "D"
-				(at 0 20.32 0)
+				(at 0 8.89 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "Value" "USBLC6-2P6"
-				(at 0 17.78 0)
+			(property "Value" "IP4283CZ10-TBR,115"
+				(at 0.254 -14.986 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "Footprint" "pepy_sym_lib:[ESD_PROT]STMicroelectronics USBLC6-2P6"
+			(property "Footprint" "pepy_sym_lib:[ESD_PROT]Nexperia IP4283CZ10-TBR,115"
+				(at 0 -17.526 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "https://lcsc.com/product-detail/presales_Nexperia-IP4283CZ10-TBR-115_C551514.html"
+				(at 0 -20.066 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" ""
 				(at 0 0 0)
 				(effects
 					(font
@@ -1182,8 +1200,8 @@
 					(hide yes)
 				)
 			)
-			(property "Datasheet" "https://lcsc.com/product-detail/Diodes-ESD_STMicroelectronics_USBLC6-2P6_USBLC6-2P6_C15999.html"
-				(at 0 -2.54 0)
+			(property "LCSC Part" "C551514"
+				(at 0 -22.606 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1191,37 +1209,10 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "5A 17V 6V Unidirectional 5.25V SOT-666-6 Electrostatic and Surge Protection (TVS/ESD) ROHS"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "LCSC Part" "C15999"
-				(at 0 -5.08 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "ESD_PROTECTION"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "[ESD_PROT]STMicroelectronics USBLC6-2P6_0_1"
+			(symbol "[ESD_PROT]Nexperia IP4283CZ10-TBR,115_1_1"
 				(rectangle
-					(start -10.16 15.24)
-					(end 10.16 2.54)
+					(start -12.7 7.62)
+					(end 12.7 -12.7)
 					(stroke
 						(width 0)
 						(type default)
@@ -1230,34 +1221,10 @@
 						(type background)
 					)
 				)
-				(arc
-					(start 0.25 -4.699)
-					(mid 0.25 -4.699)
-					(end 0.25 -4.699)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(arc
-					(start 0.25 7.62)
-					(mid 0.25 7.62)
-					(end 0.25 7.62)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
 				(pin input line
-					(at -15.24 12.7 0)
-					(length 5.08)
-					(name "I/O1"
+					(at -15.24 5.08 0)
+					(length 2.54)
+					(name "TMDS_CH1-"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1272,17 +1239,17 @@
 						)
 					)
 				)
-				(pin input line
-					(at -15.24 5.08 0)
-					(length 5.08)
-					(name "I/O2"
+				(pin free line
+					(at 15.24 1.27 180)
+					(length 2.54)
+					(name "NC"
 						(effects
 							(font
 								(size 1.27 1.27)
 							)
 						)
 					)
-					(number "3"
+					(number "10"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1290,12 +1257,10 @@
 						)
 					)
 				)
-			)
-			(symbol "[ESD_PROT]STMicroelectronics USBLC6-2P6_1_1"
-				(pin power_in line
-					(at -15.24 7.62 0)
-					(length 5.08)
-					(name "GND"
+				(pin input line
+					(at -15.24 2.54 0)
+					(length 2.54)
+					(name "TMDS_CH1+"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1310,10 +1275,28 @@
 						)
 					)
 				)
-				(pin output line
-					(at 15.24 5.08 180)
-					(length 5.08)
-					(name "I/O2"
+				(pin power_in line
+					(at -15.24 -7.62 0)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -15.24 0 0)
+					(length 2.54)
+					(name "TMDS_CH2-"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1328,10 +1311,10 @@
 						)
 					)
 				)
-				(pin power_in line
-					(at -15.24 10.16 0)
-					(length 5.08)
-					(name "VBUS"
+				(pin input line
+					(at -15.24 -2.54 0)
+					(length 2.54)
+					(name "TMDS_CH2+"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1346,10 +1329,10 @@
 						)
 					)
 				)
-				(pin output line
-					(at 15.24 12.7 180)
-					(length 5.08)
-					(name "I/O1"
+				(pin free line
+					(at 15.24 -6.35 180)
+					(length 2.54)
+					(name "NC"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1357,6 +1340,60 @@
 						)
 					)
 					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin free line
+					(at 15.24 -3.81 180)
+					(length 2.54)
+					(name "NC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -15.24 -10.16 0)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin free line
+					(at 15.24 -1.27 180)
+					(length 2.54)
+					(name "NC"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "9"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -3447,6 +3484,7 @@
 			)
 		)
 		(symbol "pepy_sym_lib:[RES_SMD]0805_2012Metric"
+			(pin_numbers hide)
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -4184,108 +4222,6 @@
 						)
 					)
 					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-		)
-		(symbol "pepy_sym_lib:[TEST_POINT]TestPoint"
-			(pin_numbers hide)
-			(pin_names
-				(offset 0.762) hide)
-			(exclude_from_sim no)
-			(in_bom no)
-			(on_board yes)
-			(property "Reference" "TP"
-				(at 0 6.858 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "TestPoint"
-				(at 0 5.08 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" "pepy_sym_lib:[TEST_POINT]TestPoint_Pad_D1.0mm"
-				(at 4.826 -7.62 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "~"
-				(at 2.032 -0.254 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "test point"
-				(at 5.842 1.27 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "Test point"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "Pin* Test*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "[TEST_POINT]TestPoint_0_1"
-				(circle
-					(center 0 3.302)
-					(radius 0.762)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "[TEST_POINT]TestPoint_1_1"
-				(pin passive line
-					(at 0 0 90)
-					(length 2.54)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -5184,6 +5120,12 @@
 		(uuid "af19362e-389e-4f17-8125-ba61415d45ae")
 	)
 	(junction
+		(at 71.12 50.8)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "af44c5c2-b4e6-4821-aba0-a32628f58f18")
+	)
+	(junction
 		(at 114.3 167.64)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -5200,12 +5142,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "cb9ad894-be49-42ec-adc0-b3231238e698")
-	)
-	(junction
-		(at 127 170.18)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "dcb06902-22cf-4211-a687-b02889916633")
 	)
 	(junction
 		(at 101.6 271.78)
@@ -5244,12 +5180,20 @@
 		(uuid "0f3069ce-b5ed-4fa4-9670-9232a2a9413c")
 	)
 	(no_connect
+		(at 101.6 45.72)
+		(uuid "0f4f8ed0-0119-414a-86ec-0df66efd7d89")
+	)
+	(no_connect
 		(at 355.6 101.6)
 		(uuid "18e500e5-89f5-4596-8bd6-974ac959f0c0")
 	)
 	(no_connect
 		(at 264.16 99.06)
 		(uuid "2d618bf1-3328-4c1a-80b7-4897c385d9ee")
+	)
+	(no_connect
+		(at 101.6 38.1)
+		(uuid "2dce8b50-e7ab-48e4-9169-f730a8d2713d")
 	)
 	(no_connect
 		(at 25.4 149.86)
@@ -5272,6 +5216,10 @@
 		(uuid "5225052f-b836-4d63-9c62-bcd7d3c03837")
 	)
 	(no_connect
+		(at 71.12 35.56)
+		(uuid "62c86e8f-4763-4eee-9cbd-24cb7aeaaf23")
+	)
+	(no_connect
 		(at 264.16 38.1)
 		(uuid "65729f1d-ea51-40bc-8134-dc48b8b055e8")
 	)
@@ -5286,6 +5234,10 @@
 	(no_connect
 		(at 355.6 48.26)
 		(uuid "6db25950-3abb-4572-a722-f84890519735")
+	)
+	(no_connect
+		(at 71.12 43.18)
+		(uuid "8bc740bb-c37a-4063-9340-44da283a7d26")
 	)
 	(no_connect
 		(at 264.16 35.56)
@@ -5431,13 +5383,13 @@
 	)
 	(wire
 		(pts
-			(xy 139.7 43.18) (xy 157.48 43.18)
+			(xy 71.12 48.26) (xy 71.12 50.8)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "1054c8bb-12e5-4d62-9bc1-bd602a01a2e2")
+		(uuid "158eefe5-b442-488f-b513-47c5d9935f0c")
 	)
 	(wire
 		(pts
@@ -5461,13 +5413,13 @@
 	)
 	(wire
 		(pts
-			(xy 57.15 58.42) (xy 63.5 58.42)
+			(xy 129.54 38.1) (xy 134.62 38.1)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "1fdfa1f3-784b-4cd7-a7ab-df3457bf82be")
+		(uuid "21cf678d-606f-463f-a034-fa636bfe6c29")
 	)
 	(wire
 		(pts
@@ -5491,36 +5443,6 @@
 	)
 	(wire
 		(pts
-			(xy 177.8 53.34) (xy 193.04 53.34)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "24e72639-37e7-47f8-bb57-79afa87e01c8")
-	)
-	(wire
-		(pts
-			(xy 177.8 43.18) (xy 193.04 43.18)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "25127d9b-c483-4d32-90eb-34e6a954b60b")
-	)
-	(wire
-		(pts
-			(xy 57.15 30.48) (xy 60.96 30.48)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "258f7fef-7fea-4a4a-8717-cb8673481fbd")
-	)
-	(wire
-		(pts
 			(xy 27.94 223.52) (xy 33.02 223.52)
 		)
 		(stroke
@@ -5528,16 +5450,6 @@
 			(type default)
 		)
 		(uuid "275590d8-d6fc-417a-ad31-689c176f7398")
-	)
-	(wire
-		(pts
-			(xy 139.7 53.34) (xy 157.48 53.34)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "285ceb84-5db9-4b46-a8dc-05d9b19835ea")
 	)
 	(wire
 		(pts
@@ -5631,16 +5543,6 @@
 	)
 	(wire
 		(pts
-			(xy 78.74 38.1) (xy 91.44 38.1)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "397d304c-f45e-42ba-8fa4-b77fa89552e3")
-	)
-	(wire
-		(pts
 			(xy 40.64 93.98) (xy 40.64 91.44)
 		)
 		(stroke
@@ -5668,6 +5570,16 @@
 			(type default)
 		)
 		(uuid "3ff5828d-5762-4979-aa7d-ecdebf9bd9d1")
+	)
+	(wire
+		(pts
+			(xy 129.54 48.26) (xy 134.62 48.26)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "401c4212-ad8d-4acb-af0a-630e53b3152c")
 	)
 	(wire
 		(pts
@@ -5751,16 +5663,6 @@
 	)
 	(wire
 		(pts
-			(xy 83.82 43.18) (xy 91.44 43.18)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "542338b2-f7d2-42f3-955c-39edbb139a35")
-	)
-	(wire
-		(pts
 			(xy 99.06 167.64) (xy 111.76 167.64)
 		)
 		(stroke
@@ -5828,16 +5730,6 @@
 			(type default)
 		)
 		(uuid "60e3cff4-05a0-4af7-9c8c-b941523f3745")
-	)
-	(wire
-		(pts
-			(xy 86.36 35.56) (xy 91.44 35.56)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "60e3e18c-3457-4538-8926-b90fa8dc032d")
 	)
 	(wire
 		(pts
@@ -6051,16 +5943,6 @@
 	)
 	(wire
 		(pts
-			(xy 127 170.18) (xy 135.89 170.18)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8d29a07d-7986-4f0b-89c6-f8bb74b3d7be")
-	)
-	(wire
-		(pts
 			(xy 106.68 124.46) (xy 104.14 124.46)
 		)
 		(stroke
@@ -6188,6 +6070,16 @@
 			(type default)
 		)
 		(uuid "b49f84d9-24f6-4c9e-aebe-370624b99e2d")
+	)
+	(wire
+		(pts
+			(xy 57.15 30.48) (xy 60.96 30.48)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b4f79937-066b-4d62-9c06-81e4bb2f8cf7")
 	)
 	(wire
 		(pts
@@ -6361,16 +6253,6 @@
 	)
 	(wire
 		(pts
-			(xy 81.28 40.64) (xy 91.44 40.64)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "cebaf5db-1eb1-4c81-af98-1ffb559abbc6")
-	)
-	(wire
-		(pts
 			(xy 99.06 152.4) (xy 99.06 154.94)
 		)
 		(stroke
@@ -6468,6 +6350,16 @@
 			(type default)
 		)
 		(uuid "eae1f34c-16a3-441c-bcb5-45ed059d2c89")
+	)
+	(wire
+		(pts
+			(xy 57.15 58.42) (xy 63.5 58.42)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "eb12c12f-e138-4da7-aa08-27af5dd5ad1e")
 	)
 	(wire
 		(pts
@@ -6705,7 +6597,7 @@
 	)
 	(text "Debug header\n"
 		(exclude_from_sim no)
-		(at 44.4027 239.5599 0)
+		(at 43.18 238.76 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6718,7 +6610,7 @@
 	)
 	(text "USB interface"
 		(exclude_from_sim no)
-		(at 197.6592 101.7475 0)
+		(at 198.12 101.6 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6731,7 +6623,7 @@
 	)
 	(text "Mounting holes\n"
 		(exclude_from_sim no)
-		(at 344.3478 247.904 0)
+		(at 345.44 248.92 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6744,7 +6636,7 @@
 	)
 	(text "Fiducials\n"
 		(exclude_from_sim no)
-		(at 397.0614 249.7834 0)
+		(at 396.24 248.92 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6757,7 +6649,7 @@
 	)
 	(text "USB active LED\n"
 		(exclude_from_sim no)
-		(at 232.664 46.2788 0)
+		(at 233.68 45.72 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6770,7 +6662,7 @@
 	)
 	(text "4-6 GPIO 0.1 inches header-e -> VCC,GND stb"
 		(exclude_from_sim no)
-		(at 784.606 154.178 0)
+		(at 784.86 154.94 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6781,7 +6673,7 @@
 	)
 	(text "ESP\n"
 		(exclude_from_sim no)
-		(at 252.1151 118.3308 0)
+		(at 251.46 119.38 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6794,7 +6686,7 @@
 	)
 	(text "Buttons\n"
 		(exclude_from_sim no)
-		(at 58.1406 108.585 0)
+		(at 58.42 109.22 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6807,7 +6699,7 @@
 	)
 	(text "0 - JTAG\n1 - USB/JTAG controller"
 		(exclude_from_sim no)
-		(at 22.225 261.112 0)
+		(at 22.86 261.62 0)
 		(effects
 			(font
 				(size 0.5 0.5)
@@ -6830,7 +6722,7 @@
 	)
 	(text "Debug LED\n"
 		(exclude_from_sim no)
-		(at 236.7534 78.3082 0)
+		(at 236.22 78.74 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6843,7 +6735,7 @@
 	)
 	(text "Voltage sense\n"
 		(exclude_from_sim no)
-		(at 128.4125 189.0844 0)
+		(at 129.54 187.96 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6856,7 +6748,7 @@
 	)
 	(text "Strapping pins"
 		(exclude_from_sim no)
-		(at 24.0998 272.731 0)
+		(at 22.86 271.78 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6869,7 +6761,7 @@
 	)
 	(text "Some strapping pins are taken into\naccount only if certain eFuses are\nconfigured accordingly"
 		(exclude_from_sim no)
-		(at 24.3041 275.8985 0)
+		(at 25.4 276.86 0)
 		(effects
 			(font
 				(size 0.5 0.5)
@@ -6881,7 +6773,7 @@
 	)
 	(text "Power section\n"
 		(exclude_from_sim no)
-		(at 15.9512 108.4072 0)
+		(at 15.24 109.22 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6894,7 +6786,7 @@
 	)
 	(text "0 - VDD_SPI_3V3\n1 - VDD_SPI_1V8\n"
 		(exclude_from_sim no)
-		(at 42.545 250.952 0)
+		(at 43.18 251.46 0)
 		(effects
 			(font
 				(size 0.5 0.5)
@@ -6906,7 +6798,7 @@
 	)
 	(text "Reed switch"
 		(exclude_from_sim no)
-		(at 56.6787 246.4952 0)
+		(at 55.88 246.38 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6972,28 +6864,6 @@
 		)
 		(uuid "1b5bed12-f8a7-493e-bdaa-527d6c3ff7bd")
 	)
-	(label "USB_D-"
-		(at 139.7 43.18 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "1c61dbf9-93a1-4e9e-b119-f0a1579fecb7")
-	)
-	(label "USB_D-"
-		(at 121.92 35.56 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "2a310578-3819-4067-9859-203e61bb9aab")
-	)
 	(label "REED"
 		(at 104.14 271.78 0)
 		(fields_autoplaced yes)
@@ -7004,17 +6874,6 @@
 			(justify left bottom)
 		)
 		(uuid "2e3e0c71-d57a-4020-aee0-67fcfbe4134c")
-	)
-	(label "USB_D+"
-		(at 139.7 53.34 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "34890ecb-39c6-460b-99fd-e15a45ba5897")
 	)
 	(label "U0_TX"
 		(at 27.94 226.06 180)
@@ -7039,17 +6898,17 @@
 		(uuid "3ed53d5c-701e-496f-8a1d-e0afbaf2cfc2")
 	)
 	(label "D+"
-		(at 83.82 43.18 0)
+		(at 71.12 40.64 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "4108ed6d-2a5b-46ad-a2d6-0b72ff3d5cd8")
 	)
-	(label "USB_D+_FIL"
+	(label "USB_D+"
 		(at 363.22 38.1 0)
 		(fields_autoplaced yes)
 		(effects
@@ -7060,8 +6919,8 @@
 		)
 		(uuid "46b32e2d-8d24-4afc-b72f-077c9edc93f4")
 	)
-	(label "USB_D+_FIL"
-		(at 193.04 53.34 0)
+	(label "USB_D+"
+		(at 134.62 48.26 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7082,8 +6941,8 @@
 		)
 		(uuid "53947366-d2b3-4759-88b3-3caf34237b0d")
 	)
-	(label "USB_D-_FIL"
-		(at 193.04 43.18 0)
+	(label "USB_D-"
+		(at 134.62 38.1 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7105,7 +6964,18 @@
 		(uuid "5faa1e62-b81e-475c-ba5b-1b420b640fd4")
 	)
 	(label "D-"
-		(at 86.36 35.56 0)
+		(at 71.12 38.1 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "60483409-3bab-4de1-9d29-15f82782feec")
+	)
+	(label "D-"
+		(at 101.6 40.64 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7113,7 +6983,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "60483409-3bab-4de1-9d29-15f82782feec")
+		(uuid "60a5266d-6acb-4c9b-b1ff-6fae8211a358")
 	)
 	(label "GEN_2"
 		(at 27.94 231.14 180)
@@ -7137,6 +7007,17 @@
 		)
 		(uuid "6fc7cc27-e509-4deb-99d6-37a4f5802935")
 	)
+	(label "D-"
+		(at 109.22 38.1 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "75d9db7f-dfc6-4c65-bba2-13edca52dda4")
+	)
 	(label "SHIELD"
 		(at 35.56 91.44 180)
 		(fields_autoplaced yes)
@@ -7147,17 +7028,6 @@
 			(justify right bottom)
 		)
 		(uuid "7c5c52ba-56e9-460a-a230-aed3e698a8c2")
-	)
-	(label "USB_D+"
-		(at 121.92 43.18 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "819269be-9429-4bc5-84ea-bcf9d7e6de30")
 	)
 	(label "MEAS_EN"
 		(at 68.58 170.18 270)
@@ -7214,6 +7084,17 @@
 		)
 		(uuid "9d88d3f9-4053-498a-abc0-2bccdcfe2c6b")
 	)
+	(label "D+"
+		(at 101.6 43.18 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a00e8444-3007-4c80-abee-a611ffaf7ddc")
+	)
 	(label "STRAP_3"
 		(at 20.32 259.08 0)
 		(fields_autoplaced yes)
@@ -7225,7 +7106,7 @@
 		)
 		(uuid "a0dea022-89bc-44af-bcb5-4ab908ac4c35")
 	)
-	(label "USB_D-_FIL"
+	(label "USB_D-"
 		(at 363.22 40.64 0)
 		(fields_autoplaced yes)
 		(effects
@@ -7246,6 +7127,17 @@
 			(justify left bottom)
 		)
 		(uuid "a3554d3c-2a37-435f-afcd-a5a50c0984a8")
+	)
+	(label "D+"
+		(at 109.22 48.26 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "a670996a-7441-45c5-9fd4-b020733c3559")
 	)
 	(label "GEN_1"
 		(at 363.22 88.9 0)
@@ -7522,6 +7414,52 @@
 		)
 		(uuid "ffb0896e-e195-45c9-a1df-4a6cdc797bce")
 	)
+	(netclass_flag ""
+		(length 2.54)
+		(shape round)
+		(at 130.81 38.1 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "2b0ee7d2-56d9-4594-a4a3-8fa02bda3b46")
+		(property "Netclass" "USB Data"
+			(at 131.5085 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(justify left)
+			)
+		)
+	)
+	(netclass_flag ""
+		(length 2.54)
+		(shape round)
+		(at 130.6853 48.26 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "e48956fa-1e9b-4abf-a0bb-69f3d20e4604")
+		(property "Netclass" "USB Data"
+			(at 131.3838 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(justify left)
+			)
+		)
+	)
 	(symbol
 		(lib_id "pepy_sym_lib:[RES_SMD]0805_2012Metric")
 		(at 96.52 254 270)
@@ -7695,7 +7633,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "pepy_sym_lib:[TEST_POINT]TestPoint_Pad_D1.0mm"
 			(at 30.48 154.94 0)
 			(effects
 				(font
@@ -7736,7 +7674,7 @@
 	)
 	(symbol
 		(lib_id "pepy_sym_lib:[COMMON_MODE_FILTER]Murata Electronics DLW21SN900SQ2L")
-		(at 167.64 46.99 0)
+		(at 119.38 41.91 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7745,7 +7683,7 @@
 		(fields_autoplaced yes)
 		(uuid "09fdf3d2-ba45-4f35-9a7a-3f08723e06cb")
 		(property "Reference" "L1"
-			(at 167.64 36.83 0)
+			(at 119.38 31.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7753,7 +7691,7 @@
 			)
 		)
 		(property "Value" "DLW21SN900SQ2L"
-			(at 167.64 39.37 0)
+			(at 119.38 34.29 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7761,7 +7699,7 @@
 			)
 		)
 		(property "Footprint" "pepy_sym_lib:[COMMON_MODE_FILTER]Murata Electronics DLW21SN900SQ2L"
-			(at 167.64 60.96 0)
+			(at 119.38 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7770,7 +7708,7 @@
 			)
 		)
 		(property "Datasheet" "https://lcsc.com/product-detail/LINE-Filter_muRata_DLW21SN900SQ2L_DLW21SN900SQ2L_C97856.html"
-			(at 167.64 63.5 0)
+			(at 119.38 58.42 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7779,7 +7717,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 167.64 46.99 0)
+			(at 119.38 41.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7788,7 +7726,7 @@
 			)
 		)
 		(property "LCSC Part" "C97856"
-			(at 167.64 66.04 0)
+			(at 119.38 60.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8252,7 +8190,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "pepy_sym_lib:[TEST_POINT]TestPoint_Pad_D1.0mm"
 			(at 88.9 154.94 0)
 			(effects
 				(font
@@ -8396,7 +8334,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "pepy_sym_lib:[TEST_POINT]TestPoint_Pad_2.0x2.0mm"
 			(at 30.48 177.8 0)
 			(effects
 				(font
@@ -8660,7 +8598,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "pepy_sym_lib:[TEST_POINT]TestPoint_Pad_D1.0mm"
 			(at 81.28 124.46 0)
 			(effects
 				(font
@@ -9216,7 +9154,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "pepy_sym_lib:[TEST_POINT]TestPoint_Pad_D1.0mm"
 			(at 38.1 132.08 0)
 			(effects
 				(font
@@ -10013,71 +9951,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+3.3V")
-		(at 78.74 38.1 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "50935542-2845-4fb6-9d16-05673925e6a0")
-		(property "Reference" "#PWR06"
-			(at 78.74 41.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3.3V"
-			(at 81.28 34.544 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 78.74 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 78.74 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 78.74 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "9ab7385e-4049-4347-afd0-4e63ce0f9191")
-		)
-		(instances
-			(project "door_open_alarm"
-				(path "/a0bc7b41-b457-4d21-bf6e-3cc6c082f129"
-					(reference "#PWR06")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "pepy_sym_lib:[RES_SMD]0805_2012Metric")
 		(at 114.3 162.56 270)
 		(unit 1)
@@ -10157,6 +10030,107 @@
 		)
 	)
 	(symbol
+		(lib_id "pepy_sym_lib:[ESD_PROT]Nexperia IP4283CZ10-TBR,115")
+		(at 86.36 40.64 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "51cdfdf1-0b2a-464e-931b-83c36ac6f6fc")
+		(property "Reference" "D1"
+			(at 86.36 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "IP4283CZ10-TBR,115"
+			(at 86.36 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "pepy_sym_lib:[ESD_PROT]Nexperia IP4283CZ10-TBR,115"
+			(at 86.36 58.166 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://lcsc.com/product-detail/presales_Nexperia-IP4283CZ10-TBR-115_C551514.html"
+			(at 86.36 60.706 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 86.36 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part" "C551514"
+			(at 86.36 63.246 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "8"
+			(uuid "c3b27d58-03a3-4075-a809-e474f4a94a32")
+		)
+		(pin "7"
+			(uuid "930d00fe-6f9e-4d95-989f-f14f9eec875e")
+		)
+		(pin "5"
+			(uuid "4c4ef328-6fa4-44b3-8821-e60e059cb2d3")
+		)
+		(pin "2"
+			(uuid "c5344463-e741-4224-b293-fd517a12cb5d")
+		)
+		(pin "9"
+			(uuid "38d878f6-fbb4-417f-8964-9dc3d1b0f74a")
+		)
+		(pin "3"
+			(uuid "400961ea-d63f-45f4-86ac-187f2e036da1")
+		)
+		(pin "4"
+			(uuid "65b88a24-261c-4145-8b4b-1b5152cfda75")
+		)
+		(pin "10"
+			(uuid "397e84a6-2f5b-42da-b16c-b2a42be3100a")
+		)
+		(pin "1"
+			(uuid "f7439511-9f6a-4050-9395-98676d87042b")
+		)
+		(pin "6"
+			(uuid "48ba41d3-3639-498a-a5d3-787a4f32fa14")
+		)
+		(instances
+			(project "door_open_alarm"
+				(path "/a0bc7b41-b457-4d21-bf6e-3cc6c082f129"
+					(reference "D1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Connector:TestPoint")
 		(at 101.6 271.78 180)
 		(unit 1)
@@ -10184,7 +10158,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "pepy_sym_lib:[TEST_POINT]TestPoint_Pad_D1.0mm"
 			(at 96.52 271.78 0)
 			(effects
 				(font
@@ -10218,94 +10192,6 @@
 			(project "door_open_alarm"
 				(path "/a0bc7b41-b457-4d21-bf6e-3cc6c082f129"
 					(reference "TP11")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "pepy_sym_lib:[ESD_PROT]STMicroelectronics USBLC6-2P6")
-		(at 106.68 48.26 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "571dc8ed-f020-4724-9ccc-24c65af1bb7f")
-		(property "Reference" "D1"
-			(at 106.68 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "USBLC6-2P6"
-			(at 106.68 30.48 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "pepy_sym_lib:[ESD_PROT]STMicroelectronics USBLC6-2P6"
-			(at 106.68 48.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://lcsc.com/product-detail/Diodes-ESD_STMicroelectronics_USBLC6-2P6_USBLC6-2P6_C15999.html"
-			(at 106.68 50.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "5A 17V 6V Unidirectional 5.25V SOT-666-6 Electrostatic and Surge Protection (TVS/ESD) ROHS"
-			(at 106.68 48.26 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC Part" "C15999"
-			(at 106.68 53.34 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "6"
-			(uuid "f1c82350-ff31-4951-9472-b5d540a2f4df")
-		)
-		(pin "2"
-			(uuid "cefbde25-fa21-4512-b953-fe047573da46")
-		)
-		(pin "1"
-			(uuid "aeac06bd-2ba8-4dd3-acd6-64f79441a67a")
-		)
-		(pin "5"
-			(uuid "84c80754-07d4-4570-99d2-2c3ca3bd3940")
-		)
-		(pin "3"
-			(uuid "3499706c-bb8f-458d-8a04-2bdd186801aa")
-		)
-		(pin "4"
-			(uuid "5a8e3a10-7f59-4287-bf09-29d3669d7ace")
-		)
-		(instances
-			(project "door_open_alarm"
-				(path "/a0bc7b41-b457-4d21-bf6e-3cc6c082f129"
-					(reference "D1")
 					(unit 1)
 				)
 			)
@@ -10438,73 +10324,6 @@
 			(project "door_open_alarm"
 				(path "/a0bc7b41-b457-4d21-bf6e-3cc6c082f129"
 					(reference "H3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "pepy_sym_lib:[TEST_POINT]TestPoint")
-		(at 135.89 170.18 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "5ca1f16c-f6a8-41df-91e4-3a34db3118a8")
-		(property "Reference" "TP?"
-			(at 138.43 165.6079 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "TestPoint"
-			(at 138.43 168.1479 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "pepy_sym_lib:[TEST_POINT]TestPoint_Pad_D1.0mm"
-			(at 140.716 177.8 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 137.922 170.434 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "test point"
-			(at 141.732 168.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "493033f2-3548-4e62-8075-f1be2d8e1c64")
-		)
-		(instances
-			(project "door_open_alarm"
-				(path "/a0bc7b41-b457-4d21-bf6e-3cc6c082f129"
-					(reference "TP?")
 					(unit 1)
 				)
 			)
@@ -10920,7 +10739,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "pepy_sym_lib:[TEST_POINT]TestPoint_Pad_D1.0mm"
 			(at 124.46 124.46 0)
 			(effects
 				(font
@@ -10986,7 +10805,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "pepy_sym_lib:[TEST_POINT]TestPoint_Pad_D1.0mm"
 			(at 53.34 119.38 0)
 			(effects
 				(font
@@ -11973,7 +11792,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 81.28 40.64 0)
+		(at 71.12 50.8 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -11982,7 +11801,7 @@
 		(fields_autoplaced yes)
 		(uuid "90acaf10-2b18-4eff-82a5-5f5b4f241261")
 		(property "Reference" "#PWR05"
-			(at 81.28 46.99 0)
+			(at 71.12 57.15 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11991,7 +11810,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 81.28 45.72 0)
+			(at 71.12 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11999,7 +11818,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 81.28 40.64 0)
+			(at 71.12 50.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12008,7 +11827,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 81.28 40.64 0)
+			(at 71.12 50.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12017,7 +11836,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 81.28 40.64 0)
+			(at 71.12 50.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14698,7 +14517,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "pepy_sym_lib:[TEST_POINT]TestPoint_Pad_D1.0mm"
 			(at 30.48 78.74 0)
 			(effects
 				(font
@@ -14765,7 +14584,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "pepy_sym_lib:[TEST_POINT]TestPoint_Pad_2.0x2.0mm"
 			(at 40.64 175.26 0)
 			(effects
 				(font
@@ -15236,7 +15055,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "pepy_sym_lib:[TEST_POINT]TestPoint_Pad_D1.0mm"
 			(at 132.08 167.64 0)
 			(effects
 				(font
