@@ -6975,7 +6975,7 @@
 		(uuid "60483409-3bab-4de1-9d29-15f82782feec")
 	)
 	(label "D-"
-		(at 101.6 40.64 0)
+		(at 101.6 41.91 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7085,7 +7085,7 @@
 		(uuid "9d88d3f9-4053-498a-abc0-2bccdcfe2c6b")
 	)
 	(label "D+"
-		(at 101.6 43.18 0)
+		(at 101.6 44.45 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
