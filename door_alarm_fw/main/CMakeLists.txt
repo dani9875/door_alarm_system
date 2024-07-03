@@ -1,4 +1,12 @@
 idf_component_register(
     SRCS 
         "main.c"
+    REQUIRES
+        "json"
+        "driver" 
+        "esp_wifi"
+        "nvs_flash"
+        "esp-tls"
+        "esp_http_client" 
+        "esp_adc"
 )
