@@ -91,6 +91,10 @@ const uint8_t reed_en = GPIO_NUM_10;
 const uint8_t door_sensor = GPIO_NUM_5;
 const uint8_t meas_en = GPIO_NUM_6;
 
+float voltage;
+uint8_t level = 0;
+
+
 static char       TAG[] = "MAIN";
 
 void adc_init(adc_unit_t adcunit, adc_channel_t chan, adc_atten_t atten, adc_bitwidth_t bitwidth)
@@ -137,10 +141,41 @@ void adc_init(adc_unit_t adcunit, adc_channel_t chan, adc_atten_t atten, adc_bit
     return;
 }
 
+// void post_event()
+// {
+//     esp_http_client_config_t config_post = {.host              = "maker.ifttt.com",
+//                                             .path              = "/trigger/door_event/json/with/key/dJvviPf6PCdAXrUKria3fc",
+//                                             .method            = HTTP_METHOD_POST,
+//                                             .transport_type    = HTTP_TRANSPORT_OVER_SSL,
+//                                             .crt_bundle_attach = esp_crt_bundle_attach};
+
+//     esp_http_client_handle_t client      = esp_http_client_init(&config_post);
+
+//     cJSON* root                          = cJSON_CreateObject();
+//     cJSON_AddStringToObject(root, "door_state", "open");
+
+//     char* jsonString = cJSON_Print(root);
+//     printf("%s\n", jsonString);
+
+//     // Set headers
+//     esp_http_client_set_header(client, "Content-Type", "application/json");
+
+//     // Set POST data
+//     esp_http_client_set_post_field(client, jsonString, strlen(jsonString));
+//     esp_http_client_perform(client);
+
+//     esp_http_client_cleanup(client);
+
+//     cJSON_Delete(root);
+//     free(jsonString);
+
+//     return;
+// }
+
 void post_event()
 {
-    esp_http_client_config_t config_post = {.host              = "maker.ifttt.com",
-                                            .path              = "/trigger/door_event/json/with/key/dJvviPf6PCdAXrUKria3fc",
+    esp_http_client_config_t config_post = {.host              = "us-east-1-1.aws.cloud2.influxdata.com",
+                                            .path              = "/api/v2/write?orgID=9684c4d068a08ec8&bucket=door&precision=ns",
                                             .method            = HTTP_METHOD_POST,
                                             .transport_type    = HTTP_TRANSPORT_OVER_SSL,
                                             .crt_bundle_attach = esp_crt_bundle_attach};
@@ -153,11 +188,20 @@ void post_event()
     char* jsonString = cJSON_Print(root);
     printf("%s\n", jsonString);
 
+   // Prepare the data to be sent
+    char post_data[100] = {0};
+    // const char* post_data = "door_status charge=2.53,door_state=1";
+    snprintf(post_data, sizeof(post_data), "door_status charge=%.2f,door_state=%d", voltage, level);
+    ESP_LOGE(TAG, "Post data: %s", post_data);
+
     // Set headers
-    esp_http_client_set_header(client, "Content-Type", "application/json");
+    esp_http_client_set_header(client, "Authorization", "Token f5JY5plK9IO6LnQvkOq5Te4ygIWOwpAXNKxCF2v-gofid27WpPVWcz397ymPr2EqiTtYVTR3WwMfz5lT7Pt3HA==");
+    esp_http_client_set_header(client, "Content-Type", "text/plain; charset=utf-8");
+
+    esp_http_client_set_post_field(client, post_data, strlen(post_data));
 
     // Set POST data
-    esp_http_client_set_post_field(client, jsonString, strlen(jsonString));
+    // esp_http_client_set_post_field(client, jsonString, strlen(jsonString));
     esp_http_client_perform(client);
 
     esp_http_client_cleanup(client);
@@ -338,7 +382,9 @@ void app_main(void)
     adc_cali_raw_to_voltage(cali_handle, adc_raw, &vbus_V);
     gpio_set_level(meas_en, 0);
 
-    ESP_LOGI("MAIN", "Voltage level: %f", (20.1/5.1)*((float)vbus_V/1000));
+    voltage = (20.1/5.1)*((float)vbus_V/1000);
+
+    ESP_LOGI("MAIN", "Voltage level: %f", voltage);
     ESP_LOGI("MAIN", "Voltage level: %d", vbus_V);
 
 
@@ -353,16 +399,18 @@ void app_main(void)
 
     gpio_reset_pin(door_sensor);
     gpio_set_direction(door_sensor, GPIO_MODE_INPUT);
-    uint8_t level = 0;
+    level = 0;
     level = gpio_get_level(door_sensor);
     ESP_LOGI("MAIN", "Door sensor level: %d", level);
+    esp_sleep_disable_wakeup_source(ESP_SLEEP_WAKEUP_ALL);
 
 
     if(level == 1)
     {
-        // esp_sleep_disable_wakeup_source(ESP_SLEEP_WAKEUP_ALL);
 
-        esp_sleep_enable_ext0_wakeup(door_sensor, 1);
+        esp_sleep_enable_ext0_wakeup(door_sensor, 0);
+
+        rtc_gpio_pullup_en(door_sensor);
         rtc_gpio_set_level(reed_en, 0);
         rtc_gpio_hold_en(reed_en); 
         ESP_LOGI("MAIN", "Open door");
@@ -372,8 +420,8 @@ void app_main(void)
     {
         ESP_LOGI("MAIN", "Closed door");
 
-        // esp_sleep_enable_timer_wakeup(5*1000000);
-        rtc_gpio_set_level(reed_en, 1);
+        esp_sleep_enable_timer_wakeup(60*1000000);
+        rtc_gpio_set_level(reed_en, 0);
         rtc_gpio_hold_en(reed_en); 
     }
     prev_level = level;
