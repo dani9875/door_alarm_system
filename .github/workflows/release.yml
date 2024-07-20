@@ -27,6 +27,7 @@ jobs:
         
     - name: Generate Gerber files
       run: |
+        cd door_alarm_hw
         kibot -c kibot_config.yaml
     - name: Listing files
       run: |
