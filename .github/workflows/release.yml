@@ -43,7 +43,7 @@ jobs:
       with:
         tag_name: ${{ env.RELEASE_VERSION }}
         name: ${{ env.RELEASE_VERSION }} release
-        files: fabrication_output.zip
+        files: door_alarm_hw/fabrication_output.zip
         draft: true
       env:
         GITHUB_TOKEN: ${{ secrets.PAT }}
