@@ -29,19 +29,14 @@ jobs:
       run: |
         cd door_alarm_hw
         kibot -c kibot_config.yaml
-    - name: Listing files
-      run: |
-        ls
-        
-    - name: Zip fabrication_output folder
-      run: |
         zip -r fabrication_output.zip fabrication_output
+        ls
 
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
         name: fabrication_output
-        path: fabrication_output.zip
+        path: door_alarm_hw/fabrication_output.zip
 
     - name: Release
       uses: softprops/action-gh-release@v2
