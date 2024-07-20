@@ -23,7 +23,7 @@ outputs:
       plot_footprint_values: true
       force_plot_invisible_refs_vals: false
       tent_vias: true
-
+      
       # gerber options
       line_width: 0.1
       subtract_mask_from_silk: false
@@ -55,17 +55,97 @@ outputs:
       metric_units: true
       pth_and_npth_single_file: false
 
+  - name: compress_fab
+    comment: "Generates a ZIP file with all the fab outputs"
+    type: compress
+    run_by_default: true
+    dir: fabrication_output/manufacturing/
+    options:
+      files:
+        - from_output: gerbers
+          dest: gerbers/
+        - from_output: drill_files
+          dest: drill_files/
+      format: ZIP
+      output: "plug_of_nails_gerbers_and_drills.%x"
+
   - name: 'bom'
-    comment: "Bill of Materials in CSV format"
+    comment: "BoM general format"
     type: bom
-    dir: fabrication_output/manufacturing
+    dir: fabrication_output/manufacturing/general_bom_and_pick_and_place
+    options:
+      output: 'plug_of_nails_bom_general.%x'
+      ref_separator: ','
+      columns:
+        - field: 'Quantity Per Pcb'
+          name: 'Quantity'
+        - field: Value
+          name: Value
+        - field: References
+          name: Parts
+        - field: Manufacturer
+          name: Manufacturer
+        - field: 'Description'
+          name: 'Description'
+      csv:
+        hide_pcb_info: true
+        hide_stats_info: true
+        quote_all: true
+
+  - name: 'bom_jlc'
+    comment: "BoM for JLC"
+    type: bom
+    dir: fabrication_output/manufacturing/jlc_bom_and_pick_and_place
+    options:
+      output: 'plug_of_nails_bom_jlc.%x'
+      ref_separator: ','
+      columns:
+        - field: Value
+          name: Comment
+        - field: References
+          name: Designator
+        - Footprint
+        - field: 'LCSC Part'
+          name: 'LCSC Part #'
+      csv:
+        hide_pcb_info: true
+        hide_stats_info: true
+        quote_all: true
 
   - name: 'position'
+    comment: "Pick and place file, general style"
+    type: position
+    dir: fabrication_output/manufacturing/general_bom_and_pick_and_place
+    options:
+      output: 'plug_of_nails_pick_and_place_general.%x'
+      format: CSV
+      only_smd: false
+      units: millimeters
+      separate_files_for_front_and_back: false
+
+  - name: 'position_jlc'
     comment: "Pick and place file, JLC style"
     type: position
-    dir: fabrication_output/manufacturing
+    dir: fabrication_output/manufacturing/jlc_bom_and_pick_and_place
     options:
+      output: 'plug_of_nails_pick_and_place_jlc.%x'
       format: CSV
+      units: millimeters
+      separate_files_for_front_and_back: false
+      only_smd: false
+      columns:
+        - id: Ref
+          name: Designator
+        - Val
+        - Package
+        - id: PosX
+          name: "Mid X"
+        - id: PosY
+          name: "Mid Y"
+        - id: Rot
+          name: Rotation
+        - id: Side
+          name: Layer
 
   - name: 'print_sch'
     comment: "Print schematic (PDF)"
@@ -121,9 +201,21 @@ outputs:
       format: "png"
       output: "pcb_2d_image_bottom.png"
 
+  - name: '3d_step'
+    comment: "3D model in STEP format"
+    type: step
+    dir: fabrication_output/capture
+    options:
+      download: true
+      origin: 'grid'
+      output: "%f-%i%I%v.%x"
+      metric_units: true
+      subst_models: true
+
   - name: "interactive_bom"
     comment: "Interactive Bill of Materials (HTML)"
     type: ibom
     dir: fabrication_output/interactive_bom
     options:
+      blacklist: 'TP*'
       blacklist_empty_val: true
