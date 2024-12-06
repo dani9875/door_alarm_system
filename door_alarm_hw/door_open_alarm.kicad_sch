@@ -9281,7 +9281,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" " 20V 2.3A 350mW 112mΩ@4.5V,2.8A 1V@250uA 1PCSPChannel SOT-23 MOSFETs ROHS"
+		(property "Description" "20V 2.3A 350mW 112mΩ@4.5V,2.8A 1V@250uA 1PCSPChannel SOT-23 MOSFETs ROHS"
 			(at 99.06 223.52 0)
 			(effects
 				(font
@@ -9551,7 +9551,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "16V 10uF X5R ±10% 0805 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS "
+		(property "Description" "16V 10uF X5R ±10% 0805 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
 			(at 293.624 107.95 0)
 			(effects
 				(font
@@ -10609,7 +10609,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "16V 10uF X5R ±10% 0805 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS "
+		(property "Description" "16V 10uF X5R ±10% 0805 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
 			(at 39.624 163.83 0)
 			(effects
 				(font
@@ -10995,7 +10995,7 @@
 			)
 		)
 		(property "Description" "Smallsized module supporting 2.4 GHz WiFi (802.11 b/g/n) and Bluetooth ® 5 (LE) Built around ESP32S3 series of SoCs, Xtensa ® dualcore 32bit LX7 microprocessor Flash up to 8 MB, optional 2 MB PSRAM in chip package 39 GPIOs, rich set of peripherals Onboard PCB antenna or external antenna connector"
-			(at 236.22 66.04 0)
+			(at 236.982 119.38 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11004,7 +11004,7 @@
 			)
 		)
 		(property "LCSC Part" "C2913206"
-			(at 236.22 66.04 0)
+			(at 235.458 128.016 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11832,7 +11832,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" " 20V 2.3A 350mW 112mΩ@4.5V,2.8A 1V@250uA 1PCSPChannel SOT-23 MOSFETs ROHS"
+		(property "Description" "20V 2.3A 350mW 112mΩ@4.5V,2.8A 1V@250uA 1PCSPChannel SOT-23 MOSFETs ROHS"
 			(at 99.06 165.1 0)
 			(effects
 				(font
@@ -12436,7 +12436,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "BOOT"
+		(property "Value" "BOOT0"
 			(at 132.08 129.032 0)
 			(effects
 				(font
@@ -13005,7 +13005,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" " 125mW Thick Film Resistors 150V ±100ppm/℃ ±5% 20kΩ 0805 Chip Resistor - Surface Mount ROHS"
+		(property "Description" "125mW Thick Film Resistors 150V ±100ppm/℃ ±5% 20kΩ 0805 Chip Resistor - Surface Mount ROHS"
 			(at 124.206 177.8 0)
 			(effects
 				(font
@@ -13178,7 +13178,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" " 20mA 99mcd Colorless transparent lens -30℃~+85℃ 631nm Red 130° 62.5mW 2V 0603 LED Indication - Discrete ROHS"
+		(property "Description" "20mA 99mcd Colorless transparent lens -30℃~+85℃ 631nm Red 130° 62.5mW 2V 0603 LED Indication - Discrete ROHS"
 			(at 147.32 66.04 0)
 			(effects
 				(font
@@ -13734,7 +13734,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "50V 100nF X7R ±10% 0805 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS "
+		(property "Description" "50V 100nF X7R ±10% 0805 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
 			(at 328.676 107.95 0)
 			(effects
 				(font
@@ -14940,7 +14940,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" " 5A 1 Horizontal attachment 16P Female -25℃~+85℃ Type-C SMD USB Connectors ROHS"
+		(property "Description" "5A 1 Horizontal attachment 16P Female -25℃~+85℃ Type-C SMD USB Connectors ROHS"
 			(at 62.23 41.91 0)
 			(effects
 				(font
@@ -15223,7 +15223,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" " 60V 320mA 1.6Ω@10V,300mA 1.5V@250uA 1PCSNChannel SOT-323-3 MOSFETs ROHS"
+		(property "Description" "60V 320mA 1.6Ω@10V,300mA 1.5V@250uA 1PCSNChannel SOT-323-3 MOSFETs ROHS"
 			(at 86.36 175.26 0)
 			(effects
 				(font
@@ -15907,7 +15907,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" " 20mA 99mcd Colorless transparent lens -30℃~+85℃ 631nm Red 130° 62.5mW 2V 0603 LED Indication - Discrete ROHS"
+		(property "Description" "20mA 99mcd Colorless transparent lens -30℃~+85℃ 631nm Red 130° 62.5mW 2V 0603 LED Indication - Discrete ROHS"
 			(at 147.32 35.56 0)
 			(effects
 				(font
@@ -16347,7 +16347,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "VBAT"
+		(property "Value" "VCC"
 			(at 31.242 124.714 0)
 			(effects
 				(font
@@ -16375,6 +16375,15 @@
 			)
 		)
 		(property "Description" "test point"
+			(at 33.02 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Field5" ""
 			(at 33.02 116.84 0)
 			(effects
 				(font
@@ -17335,7 +17344,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "50V 100nF X7R ±10% 0805 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS "
+		(property "Description" "50V 100nF X7R ±10% 0805 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
 			(at 41.91 110.236 0)
 			(effects
 				(font
@@ -17439,7 +17448,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "16V 10uF X5R ±10% 0805 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS "
+		(property "Description" "16V 10uF X5R ±10% 0805 Multilayer Ceramic Capacitors MLCC - SMD/SMT ROHS"
 			(at 9.144 161.29 0)
 			(effects
 				(font
