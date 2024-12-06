@@ -15,7 +15,7 @@ jobs:
     container: "setsoft/kicad_auto:ki8"
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: Storing release version tag in github environment
       shell: bash
