@@ -84,12 +84,16 @@ static EventGroupHandle_t s_wifi_event_group;
 
 static int s_retry_num = 0;
 
-RTC_DATA_ATTR uint8_t prev_level = 0;
+// RTC_DATA_ATTR uint8_t prev_level = 0;
+uint8_t prev_level = 0;
+
 adc_cali_handle_t                       cali_handle;
 adc_oneshot_unit_handle_t               adc_handle;
 const uint8_t reed_en = GPIO_NUM_10;
 const uint8_t door_sensor = GPIO_NUM_5;
 const uint8_t meas_en = GPIO_NUM_6;
+const uint8_t led_en = GPIO_NUM_14;
+
 
 float voltage;
 uint8_t level = 0;
@@ -348,22 +352,22 @@ void app_main(void)
      {
         case ESP_SLEEP_WAKEUP_EXT0:
         {
-            printf("Wake up from ext0\n");
+            ESP_LOGI(TAG, "Wake up from ext0");
             break;
         }
         case ESP_SLEEP_WAKEUP_EXT1: {
             uint64_t wakeup_pin_mask = esp_sleep_get_ext1_wakeup_status();
             if (wakeup_pin_mask != 0) {
                 int pin = __builtin_ffsll(wakeup_pin_mask) - 1;
-                printf("Wake up from GPIO %d\n", pin);
+                ESP_LOGI(TAG, "Wake up from GPIO %d\n", pin);
             } else {
-                printf("Wake up from GPIO\n");
+                ESP_LOGI(TAG, "Wake up from GPIO\n");
             }
             break;
         }
         case ESP_SLEEP_WAKEUP_TIMER: 
         {
-            printf("Wake up from timer. Time spent in deep sleep\n");
+            ESP_LOGI(TAG, "Wake up from timer. Time spent in deep sleep\n");
             break;
         }
         default:
@@ -387,13 +391,10 @@ void app_main(void)
     ESP_LOGI("MAIN", "Voltage level: %f", voltage);
     ESP_LOGI("MAIN", "Voltage level: %d", vbus_V);
 
-
-
     rtc_gpio_hold_dis(reed_en);
     rtc_gpio_init(reed_en);
     rtc_gpio_set_direction(reed_en, RTC_GPIO_MODE_OUTPUT_ONLY);
     rtc_gpio_set_level(reed_en, 0);
-
 
     vTaskDelay(pdMS_TO_TICKS(1000));
 
@@ -404,11 +405,18 @@ void app_main(void)
     ESP_LOGI("MAIN", "Door sensor level: %d", level);
     esp_sleep_disable_wakeup_source(ESP_SLEEP_WAKEUP_ALL);
 
+    gpio_reset_pin(led_en);
+    gpio_set_direction(led_en, GPIO_MODE_OUTPUT);
+    gpio_set_level(led_en, 1);
+    vTaskDelay(pdMS_TO_TICKS(1200));
+    gpio_set_level(led_en, 0);
+    vTaskDelay(pdMS_TO_TICKS(200));
 
-    if(level == 1)
+
+    if(level == 0)
     {
 
-        esp_sleep_enable_ext0_wakeup(door_sensor, 0);
+        esp_sleep_enable_ext0_wakeup(door_sensor, 1);
 
         rtc_gpio_pullup_en(door_sensor);
         rtc_gpio_set_level(reed_en, 0);
@@ -418,17 +426,61 @@ void app_main(void)
     }
     else
     {
-        ESP_LOGI("MAIN", "Closed door");
+        esp_sleep_enable_ext0_wakeup(door_sensor, 0);
 
-        esp_sleep_enable_timer_wakeup(60*1000000);
+        rtc_gpio_pullup_en(door_sensor);
         rtc_gpio_set_level(reed_en, 0);
         rtc_gpio_hold_en(reed_en); 
+        ESP_LOGI("MAIN", "Closed door");
     }
     prev_level = level;
 
     wifi_init_sta();
     esp_wifi_stop();
     esp_deep_sleep_start();
+
+    // gpio_reset_pin(led_en);
+    // gpio_set_direction(led_en, GPIO_MODE_OUTPUT);
+
+    // gpio_reset_pin(meas_en);
+    // gpio_set_direction(meas_en, GPIO_MODE_OUTPUT);
+    // gpio_set_level(meas_en, 1);
+    // vTaskDelay(pdMS_TO_TICKS(1000));
+
+    // gpio_reset_pin(reed_en);
+    // gpio_set_direction(reed_en, GPIO_MODE_OUTPUT);
+    // gpio_set_level(reed_en, 0);
+    // vTaskDelay(pdMS_TO_TICKS(1000));
+
+    // adc_init(ADC_UNIT_1, ADC_CHANNEL_3, ADC_ATTEN_DB_11, ADC_BITWIDTH_DEFAULT);
+    // vTaskDelay(pdMS_TO_TICKS(1000));
+
+    // gpio_reset_pin(door_sensor);
+    // gpio_set_direction(door_sensor, GPIO_MODE_INPUT);
+
+    // while(1)
+    // {
+    //     ESP_LOGI(TAG, "While running...");
+
+    //     gpio_set_level(led_en, 1);
+    //     vTaskDelay(pdMS_TO_TICKS(200));
+    //     gpio_set_level(led_en, 0);
+    //     vTaskDelay(pdMS_TO_TICKS(200));
+
+    //     adc_oneshot_read(adc_handle, ADC_CHANNEL_3, &adc_raw);
+    //     adc_cali_raw_to_voltage(cali_handle, adc_raw, &vbus_V);
+    //     gpio_set_level(meas_en, 0);
+    
+    //     voltage = (20.1/5.1)*((float)vbus_V/1000);
+    
+    //     ESP_LOGI("MAIN", "Voltage level: %f", voltage);
+    //     ESP_LOGI("MAIN", "Voltage level: %d", vbus_V);
+
+  
+    //     level = 0;
+    //     level = gpio_get_level(door_sensor);
+    //     ESP_LOGI("MAIN", "Door sensor level: %d", level);
+    // }   
 
     return;
 }
