@@ -374,44 +374,38 @@ void app_main(void)
         break;
      }
 
-    gpio_reset_pin(meas_en);
-    gpio_set_direction(meas_en, GPIO_MODE_OUTPUT);
-    gpio_set_level(meas_en, 1);
-    vTaskDelay(pdMS_TO_TICKS(1000));
+
+    gpio_reset_pin(led_en);
+    gpio_set_direction(led_en, GPIO_MODE_OUTPUT);
+    gpio_set_level(led_en, 1);
+    vTaskDelay(pdMS_TO_TICKS(200));
 
     adc_init(ADC_UNIT_1, ADC_CHANNEL_3, ADC_ATTEN_DB_11, ADC_BITWIDTH_DEFAULT);
     vTaskDelay(pdMS_TO_TICKS(1000));
 
     adc_oneshot_read(adc_handle, ADC_CHANNEL_3, &adc_raw);
     adc_cali_raw_to_voltage(cali_handle, adc_raw, &vbus_V);
-    gpio_set_level(meas_en, 0);
 
-    voltage = (20.1/5.1)*((float)vbus_V/1000);
+    gpio_set_level(led_en, 0);
+
+    voltage = (25.1/5.1)*((float)vbus_V/1000);
 
     ESP_LOGI("MAIN", "Voltage level: %f", voltage);
-    ESP_LOGI("MAIN", "Voltage level: %d", vbus_V);
+    ESP_LOGI("MAIN", "Voltage level raw: %d", vbus_V);
 
     rtc_gpio_hold_dis(reed_en);
     rtc_gpio_init(reed_en);
     rtc_gpio_set_direction(reed_en, RTC_GPIO_MODE_OUTPUT_ONLY);
     rtc_gpio_set_level(reed_en, 0);
 
-    vTaskDelay(pdMS_TO_TICKS(1000));
+    vTaskDelay(pdMS_TO_TICKS(10));
 
     gpio_reset_pin(door_sensor);
     gpio_set_direction(door_sensor, GPIO_MODE_INPUT);
     level = 0;
     level = gpio_get_level(door_sensor);
-    ESP_LOGI("MAIN", "Door sensor level: %d", level);
+    ESP_LOGI("MAIN", "Door sensor state: %d", level);
     esp_sleep_disable_wakeup_source(ESP_SLEEP_WAKEUP_ALL);
-
-    gpio_reset_pin(led_en);
-    gpio_set_direction(led_en, GPIO_MODE_OUTPUT);
-    gpio_set_level(led_en, 1);
-    vTaskDelay(pdMS_TO_TICKS(1200));
-    gpio_set_level(led_en, 0);
-    vTaskDelay(pdMS_TO_TICKS(200));
-
 
     if(level == 0)
     {
@@ -438,49 +432,6 @@ void app_main(void)
     wifi_init_sta();
     esp_wifi_stop();
     esp_deep_sleep_start();
-
-    // gpio_reset_pin(led_en);
-    // gpio_set_direction(led_en, GPIO_MODE_OUTPUT);
-
-    // gpio_reset_pin(meas_en);
-    // gpio_set_direction(meas_en, GPIO_MODE_OUTPUT);
-    // gpio_set_level(meas_en, 1);
-    // vTaskDelay(pdMS_TO_TICKS(1000));
-
-    // gpio_reset_pin(reed_en);
-    // gpio_set_direction(reed_en, GPIO_MODE_OUTPUT);
-    // gpio_set_level(reed_en, 0);
-    // vTaskDelay(pdMS_TO_TICKS(1000));
-
-    // adc_init(ADC_UNIT_1, ADC_CHANNEL_3, ADC_ATTEN_DB_11, ADC_BITWIDTH_DEFAULT);
-    // vTaskDelay(pdMS_TO_TICKS(1000));
-
-    // gpio_reset_pin(door_sensor);
-    // gpio_set_direction(door_sensor, GPIO_MODE_INPUT);
-
-    // while(1)
-    // {
-    //     ESP_LOGI(TAG, "While running...");
-
-    //     gpio_set_level(led_en, 1);
-    //     vTaskDelay(pdMS_TO_TICKS(200));
-    //     gpio_set_level(led_en, 0);
-    //     vTaskDelay(pdMS_TO_TICKS(200));
-
-    //     adc_oneshot_read(adc_handle, ADC_CHANNEL_3, &adc_raw);
-    //     adc_cali_raw_to_voltage(cali_handle, adc_raw, &vbus_V);
-    //     gpio_set_level(meas_en, 0);
-    
-    //     voltage = (20.1/5.1)*((float)vbus_V/1000);
-    
-    //     ESP_LOGI("MAIN", "Voltage level: %f", voltage);
-    //     ESP_LOGI("MAIN", "Voltage level: %d", vbus_V);
-
-  
-    //     level = 0;
-    //     level = gpio_get_level(door_sensor);
-    //     ESP_LOGI("MAIN", "Door sensor level: %d", level);
-    // }   
 
     return;
 }

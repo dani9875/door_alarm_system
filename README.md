@@ -90,7 +90,8 @@ void app_main(void)
 
 ## Limitations/what could be imporved
 - HW routing is not ideal
-- Local wifi credentials static IP must be compiled into the project
+- Local wifi credentials and static IP must be compiled into the project and must be set from source code
 - Consumptions increase when the door is open (around 400-500 uA)
-- HW and FW project is tightly-coupled making versioning obscure 
+- HW and FW project is tightly-coupled making versioning obscure
+- Voltage divider resistor mixed up
 
