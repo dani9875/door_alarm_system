@@ -129,6 +129,10 @@ void app_main(void)
 In a short test, I approached the reed sensor with the magnet, which triggered a wake-up event (the LED lights up). While I held the magnet in place, nothing further happened, and the device went back to sleep. As soon as I removed the magnet, the LED flashed again, indicating that the system had woken up, similar to how it would behave if the door were opened. </br>
 <img src="docs/reed_activity_trigger.gif" width="400">
 
+Although I did not have a proper casing the setup was mounted above the entrance to collect data and analyze power consumption. Data was being monitored in Grafana. 
+<img src="docs/mounted.gif" width="400">
+
+
 
 ### V1
 The first version was revised because the USB interface did not work at all, and it wasn’t even impedance-controlled. As a result, it had to be programmed via the UART interface using a USB-to-TTL adapter.
