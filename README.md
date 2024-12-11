@@ -88,6 +88,47 @@ void app_main(void)
 }
 ```
 
+## Consumption calculations
+Power usage estimates assume the application wakes up 6 times a day (3 times for door opening and 3 times for door closing), and the system is powered by 4 AA batteries with average capacity.
+
+| **Component**              | **Current (µA)** | **Time (s)** | **Energy Contribution (µA·s)**   | **Comment**                                                                                          |
+|----------------------------|------------------|--------------|-----------------------------------|------------------------------------------------------------------------------------------------------|
+| AP2114HA-3.3TRG1           | 60              | 86400        | $$ 60 \times 86400 = 5184000 $$  | LDO operates at all times.                                                                          |
+| ESP32 awake doing its job  | 300000          | 60           | $$ 300000 \times 60 = 18000000 $$| Wake-up duration is approximately 10 seconds.                                                      |
+| Battery measurement        | 240             | 60           | $$ 240 \times 60 = 14400 $$      | V_SENSE divider: ~ (6 V / 25000 Ω) = 240 µA, active only during wake-up periods.                    |
+| Reed switch closed (door open)    | 330             | 45           | $$ 330 \times 45 = 14850 $$      | The door is left open for a maximum of 15 seconds, and this state occurs during half of all activities. |
+| ESP32 deep sleep mode      | 8               | 86340        | $$ 8 \times 86340 = 690720 $$    | ESP32 consumes minimal power during deep sleep.                                                     |
+
+#### Total Energy Contribution (µA·s):
+$$
+5184000 + 18000000 + 14400 + 14850 + 690720 = 23903970 \, \text{µAs}
+$$
+
+#### Average Current per day (µA):
+$$
+\text{Average Current} = \frac{23903970}{86400} \approx 276 \, \text{µA}
+$$
+
+**Assumptions:**
+- **4 AA batteries** in series: Each AA battery provides **1.5V**, and the combined voltage will be **6V**.
+- **Capacity of AA batteries**: We'll assume **2000 mAh** for typical alkaline AA batteries.
+- **Average current consumption**: **276 µA** (0.276 mA).
+
+
+Battery life in hours can be calculated by dividing the total battery capacity by the current draw:
+$$
+\text{Battery Life (hours)} = \frac{\text{Battery Capacity (mAh)}}{\text{Current Consumption (mA)}}
+$$
+For **2000 mAh** batteries and **0.276 mA** current:
+$$
+\text{Battery Life (hours)} = \frac{2000}{0.276} \approx 7246 \, \text{hours}
+$$
+
+Convert this to days:
+$$
+\text{Battery Life (days)} = \frac{7246}{24} \approx 302 \, \text{days}
+$$
+
 ## Limitations/what could be imporved
 - HW routing is not ideal
 - Local wifi credentials and static IP must be compiled into the project and must be set from source code
