@@ -1,9 +1,12 @@
 # Door alarm system
-This project is a smart door alarm system designed to enhance property security by providing real-time monitoring and notifications. The system detects whether a door has been opened or closed and instantly reacts to these events.
+This project is a DIY smart door alarm system designed to enhance property security by providing real-time monitoring and notifications. The system detects whether a door has been opened or closed and instantly reacts to these events.
 
 When a change is detected, the system transmits the event data through the local network to cloud services. The cloud then relays the information to a mobile application, alerting the property owner via a notification. This ensures the owner is promptly informed whenever someone enters or leaves the property.
 
-# How to build the firmware
+*In case you are interested in making your own instance, please find the HW manufacturing files under the release tab.*
+
+# How to build, flash and monitor the output the firmware
+0. Check out the repository
 
 1. Navigate to the `door_alarm_fw` directory:  
    ```bash
@@ -20,17 +23,32 @@ When a change is detected, the system transmits the event data through the local
    ./docker_start.sh
    ```
 
-4. Inside the container, build the firmware by running:  
+4. Configure the following in the *main.c* manually before build:
+
+   ```c
+   #define EXAMPLE_ESP_WIFI_SSID      "AP"
+   #define EXAMPLE_ESP_WIFI_PASS      "password"
+
+   #define EXAMPLE_STATIC_IP_ADDR        "192.168.0.100"
+   #define EXAMPLE_STATIC_GW_ADDR        "192.168.0.1"
+   #define EXAMPLE_STATIC_NETMASK_ADDR   "255.255.255.0"
+
+   #define HOST "us-east-1-1.aws.cloud2.influxdata.com"
+   #define PATH "/api/v2/write?orgID=[org_id]&bucket=[bucket_name]&precision=ns"
+   #define TOKEN "Token [INFLUX_DB TOKEN]"
+   ```
+
+5. Inside the container, build the firmware by running:  
    ```bash
    ./build_firmware.sh
    ```
 
-5. To program the firmware onto the device, use:  
+6. To program the firmware onto the device, use:  
    ```bash
    ./burn_firmware.sh
    ```
 
-6. If you wish to observe the firmware's output, execute the monitoring script:  
+7. If you wish to observe the firmware's output, execute the monitoring script:  
    ```bash
    ./monitor_firmware.sh
    ```
@@ -53,9 +71,23 @@ Changelog:
 - Debug LED
 - Voltage sense
 
-# Technical aspects
+# Technical solutions
+The heart of the device is the reed sensor, which operates in normally open mode (the circuit remains open when the magnet and the reed sensor are aligned). This design choice minimizes power consumption, as no current is drawn when the door is closed. The system remains in deep sleep mode most of the time and can only be interrupted by an interaction, such as opening or closing the door. When the system wakes up, it checks the battery charge level and the door status, then initializes the WiFi connection to transmit this data to the cloud. 
 
-## Bring-up
+A time-series data platform, [Influx](https://cloud2.influxdata.com/signup), is used to collect the data, and the data is forwarded to [Grafana](https://grafana.com/) for visualization. You can find the `grafana_door_alarm_system.json` file in the docs, which you can import to create a dashboard for monitoring the door status and battery level. Make sure to set the source ID (UID) to ensure proper functionality. 
+
+If you would like to receive notifications about state changes, I recommend visiting [IFTTT](https://ifttt.com/explore). You can trigger events and subscribe to them. The ideal solution is to create a webhook that can be triggered from the ESP32 when it wakes up. However, this is a PRO feature. If you want to stay within the free tier, you can create a Google Sheet, set it as a trigger, and add a row (GDrive API is enabled). When a row is added, the subscriber can receive a WhatsApp message (note that with the free plan, the message may be delayed up to 1 hour).
+
+
+### V2
+After the component placement, I realized that the voltage measurement enable pin pad came off, so I rewired it to the LED enable pin. As a result, every time I measure the battery level, the LED briefly lights up. I also didn't have a fuse in my inventory, so I bypassed it with a direct connection. Since USB communication was functioning properly, I decided not to add the H1 straight header pins.
+
+<img src="docs/v2.jpg" width="400">
+
+
+**How to check if the USB interface is working properly:**
+
+Run ```lsusb``` and look for a device called ```Espressif USB JTAG/serial debug unit``` 
 
 ```bash
 root@c7cc3ff0b21c:/project# lsusb
@@ -69,8 +101,10 @@ Bus 002 Device 001: ID 1d6b:0003
 Bus 001 Device 001: ID 1d6b:0002 
 ```
 
+**A short code snippet (main.c, app_main()) that allows you to check if the general LED blinks:**
+```c
+const uint8_t led_en = GPIO_NUM_14;
 
-```bash
 void app_main(void)
 {
     gpio_reset_pin(led_en);
@@ -87,6 +121,15 @@ void app_main(void)
     return;
 }
 ```
+In a short test, I approached the reed sensor with the magnet, which triggered a wake-up event (the LED lights up). While I held the magnet in place, nothing further happened, and the device went back to sleep. As soon as I removed the magnet, the LED flashed again, indicating that the system had woken up, similar to how it would behave if the door were opened. </br>
+<img src="docs/reed_activity_trigger.gif" width="400">
+
+
+### V1
+The first version was revised because the USB interface did not work at all, and it wasn’t even impedance-controlled. As a result, it had to be programmed via the UART interface using a USB-to-TTL adapter.
+<img src="docs/v1.jpg" width="400">
+
+
 
 ## Consumption calculations
 Power usage estimates assume the application wakes up 6 times a day (3 times for door opening and 3 times for door closing), and the system is powered by 4 AA batteries with average capacity.
@@ -123,16 +166,19 @@ For **2000 mAh** batteries and **0.276 mA** current:
 $$
 \text{Battery Life (hours)} = \frac{2000}{0.276} \approx 7246 \, \text{hours}
 $$
-
 Convert this to days:
 $$
 \text{Battery Life (days)} = \frac{7246}{24} \approx 302 \, \text{days}
 $$
 
-## Limitations/what could be imporved
+**Calculation here is not final since batteries are not drained to 0**
+LDO shall be fed at least from 4V. 
+
+## Limitations/what could be improved
 - HW routing is not ideal
-- Local wifi credentials and static IP must be compiled into the project and must be set from source code
+- Local wifi credentials and static IP as well as INFLUX_DB credentials must be compiled into the project and must be set from source code
 - Consumptions increase when the door is open (around 400-500 uA)
 - HW and FW project is tightly-coupled making versioning obscure
-- Voltage divider resistor mixed up
+- Voltage divider resistors are mixed up
+- Creation of a elegant enclosure is lacked
 

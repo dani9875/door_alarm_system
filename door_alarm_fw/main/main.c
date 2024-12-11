@@ -36,14 +36,19 @@
    If you'd rather not, just change the below entries to strings with
    the config you want - ie #define EXAMPLE_WIFI_SSID "mywifissid"
 */
-#define EXAMPLE_ESP_WIFI_SSID      "DIGI-2Vbn"
-#define EXAMPLE_ESP_WIFI_PASS      "z,r2nfxI0;@XdsiP"
+#define EXAMPLE_ESP_WIFI_SSID      "[AP_NAME]"
+#define EXAMPLE_ESP_WIFI_PASS      "[PASSWORD]"
 #define EXAMPLE_ESP_MAXIMUM_RETRY  3
 #define CONFIG_ESP_WIFI_AUTH_WPA2_PSK 1
 
-#define EXAMPLE_STATIC_IP_ADDR        "192.168.100.45"
-#define EXAMPLE_STATIC_GW_ADDR        "192.168.100.1"
-#define EXAMPLE_STATIC_NETMASK_ADDR   "255.255.255.0"
+#define EXAMPLE_STATIC_IP_ADDR        "[STATIC_IP]"
+#define EXAMPLE_STATIC_GW_ADDR        "[GATEWAY]"
+#define EXAMPLE_STATIC_NETMASK_ADDR   "[NETMASK]"
+
+#define HOST "us-east-1-1.aws.cloud2.influxdata.com"
+#define PATH "/api/v2/write?orgID=[ID]a08ec8&bucket=[BUCKET_NAME]&precision=ns"
+#define TOKEN "Token [your token]"
+
 
 #if CONFIG_ESP_WPA3_SAE_PWE_HUNT_AND_PECK
 #define ESP_WIFI_SAE_MODE WPA3_SAE_PWE_HUNT_AND_PECK
@@ -178,8 +183,8 @@ void adc_init(adc_unit_t adcunit, adc_channel_t chan, adc_atten_t atten, adc_bit
 
 void post_event()
 {
-    esp_http_client_config_t config_post = {.host              = "us-east-1-1.aws.cloud2.influxdata.com",
-                                            .path              = "/api/v2/write?orgID=9684c4d068a08ec8&bucket=door&precision=ns",
+    esp_http_client_config_t config_post = {.host              = HOST,
+                                            .path              = PATH,
                                             .method            = HTTP_METHOD_POST,
                                             .transport_type    = HTTP_TRANSPORT_OVER_SSL,
                                             .crt_bundle_attach = esp_crt_bundle_attach};
@@ -199,7 +204,7 @@ void post_event()
     ESP_LOGE(TAG, "Post data: %s", post_data);
 
     // Set headers
-    esp_http_client_set_header(client, "Authorization", "Token f5JY5plK9IO6LnQvkOq5Te4ygIWOwpAXNKxCF2v-gofid27WpPVWcz397ymPr2EqiTtYVTR3WwMfz5lT7Pt3HA==");
+    esp_http_client_set_header(client, "Authorization", TOKEN);
     esp_http_client_set_header(client, "Content-Type", "text/plain; charset=utf-8");
 
     esp_http_client_set_post_field(client, post_data, strlen(post_data));
