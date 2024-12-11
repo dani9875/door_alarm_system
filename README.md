@@ -159,22 +159,24 @@ $$
 
 
 Battery life in hours can be calculated by dividing the total battery capacity by the current draw:</br>
+
 $$
 \text{Battery Life (hours)} = \frac{\text{Battery Capacity (mAh)}}{\text{Current Consumption (mA)}}
 $$
 
 For **2000 mAh** batteries and **0.276 mA** current:</br>
+
 $$
 \text{Battery Life (hours)} = \frac{2000}{0.276} \approx 7246 \, \text{hours}
 $$
 
 Convert this to days:</br>
+
 $$
 \text{Battery Life (days)} = \frac{7246}{24} \approx 302 \, \text{days}
 $$
 
-**Calculation here is not final since batteries are not drained to 0 V.**
-LDO shall be fed at least from 4V. 
+**Calculation here is not final since batteries are not drained to 0 V. Will be added after some testing. LDO shall be fed at least from 4V.** 
 
 ## Limitations/what could be improved
 - HW routing is not ideal
@@ -183,4 +185,5 @@ LDO shall be fed at least from 4V.
 - HW and FW project is tightly-coupled making versioning obscure
 - Voltage divider resistors are mixed up
 - Creation of a elegant enclosure is lacked
+- Some FW clean-up
 

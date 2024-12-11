@@ -195,7 +195,7 @@ void post_event()
     cJSON_AddStringToObject(root, "door_state", "open");
 
     char* jsonString = cJSON_Print(root);
-    printf("%s\n", jsonString);
+    // printf("%s\n", jsonString);
 
    // Prepare the data to be sent
     char post_data[100] = {0};
