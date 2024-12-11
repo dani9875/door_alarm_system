@@ -130,7 +130,9 @@ In a short test, I approached the reed sensor with the magnet, which triggered a
 <img src="docs/reed_activity_trigger.gif" width="400">
 
 Although I did not have a proper casing the setup was mounted above the entrance to collect data and analyze power consumption. Data was being monitored in Grafana. 
+
 <img src="docs/mounted.gif" width="400">
+</br>
 
 
 
