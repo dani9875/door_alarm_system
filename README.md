@@ -162,11 +162,13 @@ Battery life in hours can be calculated by dividing the total battery capacity b
 $$
 \text{Battery Life (hours)} = \frac{\text{Battery Capacity (mAh)}}{\text{Current Consumption (mA)}}
 $$
-For **2000 mAh** batteries and **0.276 mA** current:
+
+For **2000 mAh** batteries and **0.276 mA** current:</br>
 $$
 \text{Battery Life (hours)} = \frac{2000}{0.276} \approx 7246 \, \text{hours}
 $$
-Convert this to days:
+
+Convert this to days:</br>
 $$
 \text{Battery Life (days)} = \frac{7246}{24} \approx 302 \, \text{days}
 $$
