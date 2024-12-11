@@ -23,7 +23,7 @@ When a change is detected, the system transmits the event data through the local
    ./docker_start.sh
    ```
 
-4. Configure the following in the *main.c* manually before build:
+4. Configure the followings in *main.c* manually before build:
 
    ```c
    #define EXAMPLE_ESP_WIFI_SSID      "AP"
@@ -136,20 +136,20 @@ Power usage estimates assume the application wakes up 6 times a day (3 times for
 
 | **Component**              | **Current (µA)** | **Time (s)** | **Energy Contribution (µA·s)**   | **Comment**                                                                                          |
 |----------------------------|------------------|--------------|-----------------------------------|------------------------------------------------------------------------------------------------------|
-| AP2114HA-3.3TRG1           | 60              | 86400        | $$ 60 \times 86400 = 5184000 $$  | LDO operates at all times.                                                                          |
-| ESP32 awake doing its job  | 300000          | 60           | $$ 300000 \times 60 = 18000000 $$| Wake-up duration is approximately 10 seconds.                                                      |
-| Battery measurement        | 240             | 60           | $$ 240 \times 60 = 14400 $$      | V_SENSE divider: ~ (6 V / 25000 Ω) = 240 µA, active only during wake-up periods.                    |
-| Reed switch closed (door open)    | 330             | 45           | $$ 330 \times 45 = 14850 $$      | The door is left open for a maximum of 15 seconds, and this state occurs during half of all activities. |
-| ESP32 deep sleep mode      | 8               | 86340        | $$ 8 \times 86340 = 690720 $$    | ESP32 consumes minimal power during deep sleep.                                                     |
+| AP2114HA-3.3TRG1           | 60              | 86400        | 60*86400 = 5184000  | LDO operates at all times.                                                                          |
+| ESP32 awake doing its job  | 300000          | 60           | 300000*60 = 18000000| Wake-up duration is approximately 10 seconds.                                                      |
+| Battery measurement        | 240             | 60           | 240*60 = 14400   | V_SENSE divider: ~ (6 V / 25000 Ω) = 240 µA, active only during wake-up periods.                    |
+| Reed switch closed (door open)    | 330             | 45           | 330*45 = 14850      | The door is left open for a maximum of 15 seconds, and this state occurs during half of all activities. |
+| ESP32 deep sleep mode      | 8               | 86340        | 8*86340 = 690720    | ESP32 consumes minimal power during deep sleep.                                                     |
 
 #### Total Energy Contribution (µA·s):
 $$
-5184000 + 18000000 + 14400 + 14850 + 690720 = 23903970 \, \text{µAs}
+5184000 + 18000000 + 14400 + 14850 + 690720 = 23903970 \ \text{µAs}
 $$
 
 #### Average Current per day (µA):
 $$
-\text{Average Current} = \frac{23903970}{86400} \approx 276 \, \text{µA}
+\text{Average Current} = \frac{23903970}{86400} \approx 276 \ \text{µA}
 $$
 
 **Assumptions:**
@@ -158,7 +158,7 @@ $$
 - **Average current consumption**: **276 µA** (0.276 mA).
 
 
-Battery life in hours can be calculated by dividing the total battery capacity by the current draw:
+Battery life in hours can be calculated by dividing the total battery capacity by the current draw:</br>
 $$
 \text{Battery Life (hours)} = \frac{\text{Battery Capacity (mAh)}}{\text{Current Consumption (mA)}}
 $$
@@ -171,7 +171,7 @@ $$
 \text{Battery Life (days)} = \frac{7246}{24} \approx 302 \, \text{days}
 $$
 
-**Calculation here is not final since batteries are not drained to 0**
+**Calculation here is not final since batteries are not drained to 0 V.**
 LDO shall be fed at least from 4V. 
 
 ## Limitations/what could be improved
