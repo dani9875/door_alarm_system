@@ -36,14 +36,19 @@
    If you'd rather not, just change the below entries to strings with
    the config you want - ie #define EXAMPLE_WIFI_SSID "mywifissid"
 */
-#define EXAMPLE_ESP_WIFI_SSID      "DIGI-2Vbn"
-#define EXAMPLE_ESP_WIFI_PASS      "z,r2nfxI0;@XdsiP"
+#define EXAMPLE_ESP_WIFI_SSID      "[AP_NAME]"
+#define EXAMPLE_ESP_WIFI_PASS      "[PASSWORD]"
 #define EXAMPLE_ESP_MAXIMUM_RETRY  3
 #define CONFIG_ESP_WIFI_AUTH_WPA2_PSK 1
 
-#define EXAMPLE_STATIC_IP_ADDR        "192.168.100.45"
-#define EXAMPLE_STATIC_GW_ADDR        "192.168.100.1"
-#define EXAMPLE_STATIC_NETMASK_ADDR   "255.255.255.0"
+#define EXAMPLE_STATIC_IP_ADDR        "[STATIC_IP]"
+#define EXAMPLE_STATIC_GW_ADDR        "[GATEWAY]"
+#define EXAMPLE_STATIC_NETMASK_ADDR   "[NETMASK]"
+
+#define HOST "us-east-1-1.aws.cloud2.influxdata.com"
+#define PATH "/api/v2/write?orgID=[ID]a08ec8&bucket=[BUCKET_NAME]&precision=ns"
+#define TOKEN "Token [your token]"
+
 
 #if CONFIG_ESP_WPA3_SAE_PWE_HUNT_AND_PECK
 #define ESP_WIFI_SAE_MODE WPA3_SAE_PWE_HUNT_AND_PECK
@@ -84,12 +89,16 @@ static EventGroupHandle_t s_wifi_event_group;
 
 static int s_retry_num = 0;
 
-RTC_DATA_ATTR uint8_t prev_level = 0;
+// RTC_DATA_ATTR uint8_t prev_level = 0;
+uint8_t prev_level = 0;
+
 adc_cali_handle_t                       cali_handle;
 adc_oneshot_unit_handle_t               adc_handle;
 const uint8_t reed_en = GPIO_NUM_10;
 const uint8_t door_sensor = GPIO_NUM_5;
 const uint8_t meas_en = GPIO_NUM_6;
+const uint8_t led_en = GPIO_NUM_14;
+
 
 float voltage;
 uint8_t level = 0;
@@ -174,8 +183,8 @@ void adc_init(adc_unit_t adcunit, adc_channel_t chan, adc_atten_t atten, adc_bit
 
 void post_event()
 {
-    esp_http_client_config_t config_post = {.host              = "us-east-1-1.aws.cloud2.influxdata.com",
-                                            .path              = "/api/v2/write?orgID=9684c4d068a08ec8&bucket=door&precision=ns",
+    esp_http_client_config_t config_post = {.host              = HOST,
+                                            .path              = PATH,
                                             .method            = HTTP_METHOD_POST,
                                             .transport_type    = HTTP_TRANSPORT_OVER_SSL,
                                             .crt_bundle_attach = esp_crt_bundle_attach};
@@ -186,7 +195,7 @@ void post_event()
     cJSON_AddStringToObject(root, "door_state", "open");
 
     char* jsonString = cJSON_Print(root);
-    printf("%s\n", jsonString);
+    // printf("%s\n", jsonString);
 
    // Prepare the data to be sent
     char post_data[100] = {0};
@@ -195,7 +204,7 @@ void post_event()
     ESP_LOGE(TAG, "Post data: %s", post_data);
 
     // Set headers
-    esp_http_client_set_header(client, "Authorization", "Token f5JY5plK9IO6LnQvkOq5Te4ygIWOwpAXNKxCF2v-gofid27WpPVWcz397ymPr2EqiTtYVTR3WwMfz5lT7Pt3HA==");
+    esp_http_client_set_header(client, "Authorization", TOKEN);
     esp_http_client_set_header(client, "Content-Type", "text/plain; charset=utf-8");
 
     esp_http_client_set_post_field(client, post_data, strlen(post_data));
@@ -348,67 +357,65 @@ void app_main(void)
      {
         case ESP_SLEEP_WAKEUP_EXT0:
         {
-            printf("Wake up from ext0\n");
+            ESP_LOGI(TAG, "Wake up from ext0");
             break;
         }
         case ESP_SLEEP_WAKEUP_EXT1: {
             uint64_t wakeup_pin_mask = esp_sleep_get_ext1_wakeup_status();
             if (wakeup_pin_mask != 0) {
                 int pin = __builtin_ffsll(wakeup_pin_mask) - 1;
-                printf("Wake up from GPIO %d\n", pin);
+                ESP_LOGI(TAG, "Wake up from GPIO %d\n", pin);
             } else {
-                printf("Wake up from GPIO\n");
+                ESP_LOGI(TAG, "Wake up from GPIO\n");
             }
             break;
         }
         case ESP_SLEEP_WAKEUP_TIMER: 
         {
-            printf("Wake up from timer. Time spent in deep sleep\n");
+            ESP_LOGI(TAG, "Wake up from timer. Time spent in deep sleep\n");
             break;
         }
         default:
         break;
      }
 
-    gpio_reset_pin(meas_en);
-    gpio_set_direction(meas_en, GPIO_MODE_OUTPUT);
-    gpio_set_level(meas_en, 1);
-    vTaskDelay(pdMS_TO_TICKS(1000));
+
+    gpio_reset_pin(led_en);
+    gpio_set_direction(led_en, GPIO_MODE_OUTPUT);
+    gpio_set_level(led_en, 1);
+    vTaskDelay(pdMS_TO_TICKS(200));
 
     adc_init(ADC_UNIT_1, ADC_CHANNEL_3, ADC_ATTEN_DB_11, ADC_BITWIDTH_DEFAULT);
     vTaskDelay(pdMS_TO_TICKS(1000));
 
     adc_oneshot_read(adc_handle, ADC_CHANNEL_3, &adc_raw);
     adc_cali_raw_to_voltage(cali_handle, adc_raw, &vbus_V);
-    gpio_set_level(meas_en, 0);
 
-    voltage = (20.1/5.1)*((float)vbus_V/1000);
+    gpio_set_level(led_en, 0);
+
+    voltage = (25.1/5.1)*((float)vbus_V/1000);
 
     ESP_LOGI("MAIN", "Voltage level: %f", voltage);
-    ESP_LOGI("MAIN", "Voltage level: %d", vbus_V);
-
-
+    ESP_LOGI("MAIN", "Voltage level raw: %d", vbus_V);
 
     rtc_gpio_hold_dis(reed_en);
     rtc_gpio_init(reed_en);
     rtc_gpio_set_direction(reed_en, RTC_GPIO_MODE_OUTPUT_ONLY);
     rtc_gpio_set_level(reed_en, 0);
 
-
-    vTaskDelay(pdMS_TO_TICKS(1000));
+    vTaskDelay(pdMS_TO_TICKS(10));
 
     gpio_reset_pin(door_sensor);
     gpio_set_direction(door_sensor, GPIO_MODE_INPUT);
     level = 0;
     level = gpio_get_level(door_sensor);
-    ESP_LOGI("MAIN", "Door sensor level: %d", level);
+    ESP_LOGI("MAIN", "Door sensor state: %d", level);
     esp_sleep_disable_wakeup_source(ESP_SLEEP_WAKEUP_ALL);
 
-
-    if(level == 1)
+    if(level == 0)
     {
 
-        esp_sleep_enable_ext0_wakeup(door_sensor, 0);
+        esp_sleep_enable_ext0_wakeup(door_sensor, 1);
 
         rtc_gpio_pullup_en(door_sensor);
         rtc_gpio_set_level(reed_en, 0);
@@ -418,11 +425,12 @@ void app_main(void)
     }
     else
     {
-        ESP_LOGI("MAIN", "Closed door");
+        esp_sleep_enable_ext0_wakeup(door_sensor, 0);
 
-        esp_sleep_enable_timer_wakeup(60*1000000);
+        rtc_gpio_pullup_en(door_sensor);
         rtc_gpio_set_level(reed_en, 0);
         rtc_gpio_hold_en(reed_en); 
+        ESP_LOGI("MAIN", "Closed door");
     }
     prev_level = level;
 

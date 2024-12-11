@@ -33,7 +33,7 @@ jobs:
         ls
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: fabrication_output
         path: door_alarm_hw/fabrication_output.zip

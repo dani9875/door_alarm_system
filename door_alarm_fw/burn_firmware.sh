@@ -10,7 +10,7 @@ echo Detected OS: $os_type
 
 # Define the device port based on the operating system type
 if [ "$os_type" == "Linux" ]; then
-    device_port="/dev/ttyUSB*"
+    device_port="/dev/ttyACM*"
 elif [ "$os_type" == "Darwin" ]; then
     device_port="/dev/cu.usb*"
 else
@@ -20,6 +20,4 @@ fi
 
 ./kill_serial_process.sh
 
-esptool.py --chip esp32s3 -p $(ls $device_port) --before=default_reset --after=hard_reset write_flash --flash_mode qio --flash_size detect --flash_freq 40m 0x0 "build/bootloader/bootloader.bin" 0x8000 build/partition_table/partition-table.bin 0xe000 "build/ota_data_initial.bin" 0x10000 "build/esp_rfid.bin" 
-
-otatool.py -p $(ls $device_port) switch_ota_partition --slot 0
+esptool.py --chip esp32s3 -p $(ls $device_port) --before=default_reset --after=hard_reset write_flash --flash_mode qio --flash_size detect --flash_freq 40m 0x0 "build/bootloader/bootloader.bin" 0x8000 build/partition_table/partition-table.bin 0xe000 "build/ota_data_initial.bin" 0x10000 "build/esp_rfid.bin"
