@@ -153,10 +153,10 @@ $$
 $$
 
 **Assumptions:**
-- **4 AA batteries** in series: Each AA battery provides **1.5V**, and the combined voltage will be **6V**.
-- **Capacity of AA batteries**: We'll assume **2000 mAh** for typical alkaline AA batteries.
-- **Average current consumption**: **276 µA** (0.276 mA).
+**4 AA batteries** in series: Each AA battery provides **1.5V**, and the combined voltage will be **6V**. **Capacity of AA batteries**: We'll assume **2000 mAh** for typical alkaline AA batteries. **Average current consumption**: **276 µA** (0.276 mA).
 </br>
+
+
 
 #### Battery life in hours can be calculated by dividing the total battery capacity by the current draw:
 
