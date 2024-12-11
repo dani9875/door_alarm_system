@@ -56,6 +56,11 @@ When a change is detected, the system transmits the event data through the local
 
 ## Release notes
 
+### Version: v3.0
+Changelog:
+- Voltage divider resistor change
+- Component library update
+
 ### Version: v2.0
 Changelog:
 - Component library organised
