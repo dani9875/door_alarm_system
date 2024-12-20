@@ -9,6 +9,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "esp_log.h"
+#include "minunit.h"
 #include <stdlib.h>
 #include "esp_adc/adc_cali.h"
 #include "esp_adc/adc_cali_scheme.h"
@@ -76,6 +77,12 @@
 #define ESP_WIFI_SCAN_AUTH_MODE_THRESHOLD WIFI_AUTH_WPA2_WPA3_PSK
 #elif CONFIG_ESP_WIFI_AUTH_WAPI_PSK
 #define ESP_WIFI_SCAN_AUTH_MODE_THRESHOLD WIFI_AUTH_WAPI_PSK
+#endif
+
+
+// #define TESTING_WITH_MINUNIT    //include this if you want to run tests with minunit, otherwise that code is not included
+#ifdef TESTING_WITH_MINUNIT
+int mu_test_runner(void);
 #endif
 
 /* FreeRTOS event group to signal when we are connected*/
@@ -339,8 +346,59 @@ void wifi_init_sta(void)
     post_event();
 }
 
+static char* mu_TestBoilingPt()
+{
+    uint8_t c, f;
+    c = 100;
+    f = 212;
+    mu_assert("mu_TestBoilingPt Failed, f != 212", c==f);
+    return 0;
+}
+
+//TODO more tests go here
+
+//top level test functions
+static char* mu_all_tests()
+{
+    ESP_LOGI(TAG,"Running MINUNIT mu_TestBoilingPt...\n");
+    mu_run_test(mu_TestBoilingPt);
+    
+    //TODO call more tests from here
+    
+    return 0;
+}
+
+int mu_test_runner()
+{
+    ESP_LOGI(TAG, "Starting MINUNIT Tests\n");
+
+    char* result = mu_all_tests();
+    if (result)
+    {
+        ESP_LOGI(TAG, "%s\n", result);
+    }
+    else
+    {
+        ESP_LOGI(TAG, "ALL MINUNIT TESTS PASSED\n");
+    }
+    ESP_LOGI(TAG, "MINUNIT Tests run: %d\n", mu_tests_run);
+
+    return result != 0;
+}
+
 void app_main(void)
 {
+  
+#ifdef TESTING_WITH_MINUNIT    //run the tests
+    int mu_result = mu_test_runner();
+
+    if (mu_result)
+    {
+        ESP_LOGE(TAG, "Failed test(s)...");
+        
+        return;
+    }
+#endif
     uint16_t adc_raw;
     uint16_t vbus_V;
 
