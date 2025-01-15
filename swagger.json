@@ -1,0 +1,164 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "",
+    "description": "",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "https://virtserver.swaggerhub.com/DHATAR94_1/door_alarm/1",
+      "description": "SwaggerHub API Auto Mocking"
+    }
+  ],
+  "paths": {
+    "/alive": {
+      "get": {
+        "summary": "API Health Check",
+        "description": "Confirms that the API is running and operational.",
+        "operationId": "getAliveStatus",
+        "responses": {
+          "200": {
+            "description": "API is alive and operational.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/updateBatteryLevel": {
+      "put": {
+        "summary": "Update battery level",
+        "description": "Accepts a float value to update the battery level (0–10V).",
+        "operationId": "updateBatteryLevel",
+        "requestBody": {
+          "description": "Battery level value to update the resource.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateBatteryLevel_body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated the battery level.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_1"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input. Battery level must be a float between 0.0 and 10.0."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
+    "/updateDoorStatus": {
+      "put": {
+        "summary": "Update door status",
+        "description": "Accepts a value to update the door status (open or closed).",
+        "operationId": "updateDoorStatus",
+        "requestBody": {
+          "description": "Door status value to update the resource.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateDoorStatus_body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated the door status.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inline_response_200_1"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input. Door status must be either 'open' or 'closed'."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "inline_response_200": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Health status of the API.",
+            "example": "alive"
+          }
+        }
+      },
+      "updateBatteryLevel_body": {
+        "required": [
+          "batteryLevel"
+        ],
+        "type": "object",
+        "properties": {
+          "batteryLevel": {
+            "type": "number",
+            "description": "Battery level in volts (0.0 - 10.0).",
+            "format": "float",
+            "example": 7.5
+          }
+        }
+      },
+      "inline_response_200_1": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "success"
+          }
+        }
+      },
+      "updateDoorStatus_body": {
+        "required": [
+          "doorStatus"
+        ],
+        "type": "object",
+        "properties": {
+          "doorStatus": {
+            "type": "string",
+            "description": "Status of the door (either open or closed).",
+            "example": "open",
+            "enum": [
+              "open",
+              "closed"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
