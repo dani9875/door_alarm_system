@@ -188,44 +188,75 @@ void adc_init(adc_unit_t adcunit, adc_channel_t chan, adc_atten_t atten, adc_bit
 //     return;
 // }
 
-void post_event()
-{
-    esp_http_client_config_t config_post = {.host              = HOST,
-                                            .path              = PATH,
-                                            .method            = HTTP_METHOD_POST,
-                                            .transport_type    = HTTP_TRANSPORT_OVER_SSL,
-                                            .crt_bundle_attach = esp_crt_bundle_attach};
+void post_event() {
+    esp_http_client_config_t config_post = {
+        .host              = HOST,
+        .path              = PATH,
+        .method            = HTTP_METHOD_POST,
+        .transport_type    = HTTP_TRANSPORT_OVER_SSL,
+        .crt_bundle_attach = esp_crt_bundle_attach
+    };
 
-    esp_http_client_handle_t client      = esp_http_client_init(&config_post);
+    esp_http_client_handle_t client = esp_http_client_init(&config_post);
 
-    cJSON* root                          = cJSON_CreateObject();
-    cJSON_AddStringToObject(root, "door_state", "open");
+    // Create the inner JSON string
+    char door_status[50] = {0};
+    snprintf(door_status, sizeof(door_status), "charge=%.2f,door_state=%d", voltage, level);
 
-    char* jsonString = cJSON_Print(root);
-    // printf("%s\n", jsonString);
+    cJSON* inner = cJSON_CreateObject();
+    if (inner == NULL) {
+        ESP_LOGE(TAG, "Failed to create inner JSON object");
+        return;
+    }
+    cJSON_AddStringToObject(inner, "door_status", door_status);
 
-   // Prepare the data to be sent
-    char post_data[100] = {0};
-    // const char* post_data = "door_status charge=2.53,door_state=1";
-    snprintf(post_data, sizeof(post_data), "door_status charge=%.2f,door_state=%d", voltage, level);
-    ESP_LOGE(TAG, "Post data: %s", post_data);
+    char* innerJsonString = cJSON_PrintUnformatted(inner);
+    if (innerJsonString == NULL) {
+        ESP_LOGE(TAG, "Failed to serialize inner JSON");
+        cJSON_Delete(inner);
+        return;
+    }
+    cJSON_Delete(inner); // Cleanup after inner JSON
+
+    // Create the outer JSON object
+    cJSON* outer = cJSON_CreateObject();
+    if (outer == NULL) {
+        ESP_LOGE(TAG, "Failed to create outer JSON object");
+        free(innerJsonString);
+        return;
+    }
+    cJSON_AddStringToObject(outer, "body", innerJsonString);
+
+    char* outerJsonString = cJSON_Print(outer);
+    if (outerJsonString == NULL) {
+        ESP_LOGE(TAG, "Failed to serialize outer JSON");
+        cJSON_Delete(outer);
+        free(innerJsonString);
+        return;
+    }
+
+    ESP_LOGI(TAG, "Final JSON payload: %s", outerJsonString);
 
     // Set headers
-    esp_http_client_set_header(client, "Authorization", TOKEN);
-    esp_http_client_set_header(client, "Content-Type", "text/plain; charset=utf-8");
+    esp_http_client_set_header(client, "Content-Type", "application/json");
+    esp_http_client_set_header(client, "x-api-key", TOKEN);
 
-    esp_http_client_set_post_field(client, post_data, strlen(post_data));
+    // Set POST field
+    esp_http_client_set_post_field(client, outerJsonString, strlen(outerJsonString));
 
-    // Set POST data
-    // esp_http_client_set_post_field(client, jsonString, strlen(jsonString));
-    esp_http_client_perform(client);
+    // Perform POST request
+    esp_err_t err = esp_http_client_perform(client);
+    if (err == ESP_OK) {
+        ESP_LOGI(TAG, "HTTP POST Status = %d", esp_http_client_get_status_code(client));
+    } else {
+        ESP_LOGE(TAG, "HTTP POST request failed: %s", esp_err_to_name(err));
+    }
 
+    // Clean up
     esp_http_client_cleanup(client);
-
-    cJSON_Delete(root);
-    free(jsonString);
-
-    return;
+    cJSON_Delete(outer);
+    free(innerJsonString);
+    free(outerJsonString);
 }
 
 static void example_set_static_ip(esp_netif_t *netif)
